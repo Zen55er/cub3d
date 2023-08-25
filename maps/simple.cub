@@ -1,0 +1,12 @@
+NO ./textures/north
+SO ./textures/south
+WO ./textures/west
+EO ./textures/east
+F 220,100,0
+C 225,30,0
+
+111111
+100101
+101001
+1100N1
+111111
