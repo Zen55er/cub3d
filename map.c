@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:18:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/28 11:27:02 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:02:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,35 @@ int	skip_spaces(char *str, int i)
 	return (i);
 }
 
+int	validate_north(t_data *data, char **temp, int i)
+{
+	i += 2;
+	i = skip_spaces(temp, i);
+	if (data->n_path)
+		return (print_error("Duplicate texture"));
+	data->n_path = ft_substr(temp, i, ft_strlen(temp - i));
+	if (access(data->n_path, R_OK))
+		return (print_error("Invalid texture path"));
+}
+
 int	validate_texture(t_data *data, char *temp)
 {
 	int	i;
 
 	i = 0;
 	i = skip_spaces(temp, i);
-	if (temp[i] == 'N' && temp[i + 1] == 'O' && temp[i + 2] == ' ')
-	{
-		i += 2;
-		i = skip_spaces(temp, i);
-		if (data->n_path)
-			return (print_error("Duplicate texture"));
-		data->n_path = ft_substr(temp, i, ft_strlen(temp - i));
-		if (access(data->n_path, R_OK))
-			return (print_error("Invalid texture path"));
-	}
+	if (temp[i] == 'N' && temp[i + 1] == 'O' && ft_isspace(temp[i + 2]))
+		return (validate_north(data, temp, i));
+	else if (temp[i] == 'S' && temp[i + 1] == 'O' && ft_isspace(temp[i + 2]))
+		return (validate_south(data, temp, i));
+	else if (temp[i] == 'W' && temp[i + 1] == 'E' && ft_isspace(temp[i + 2]))
+		return (validate_west(data, temp, i));
+	else if (temp[i] == 'E' && temp[i + 1] == 'A' && ft_isspace(temp[i + 2]))
+		return (validate_east(data, temp, i));
+	else if (temp[i] == 'F' && ft_isspace(temp[i + 1]))
+		return (validate_floor(data, temp, i));
+	else if (temp[i] == 'C' && ft_isspace(temp[i + 1]))
+		return (validate_ceiling(data, temp, i));
 	return (0);
 }
 

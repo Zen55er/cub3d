@@ -1,7 +1,6 @@
 F 220,100,0
 NO ./textures/north
 C 225,30,0
-
 SO ./textures/south
 WO ./textures/west
 EO ./textures/east
