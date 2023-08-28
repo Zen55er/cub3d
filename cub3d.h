@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/25 10:37:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:08:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,23 @@
 
 typedef struct s_data
 {
-	
+	char	**map;
+	int		map_x;
+	int		map_y;
+	char	*n_path;
+	char	*s_path;
+	char	*w_path;
+	char	*e_path;
 }			t_data;
+
+/*map.c*/
+int		print_error(char *message);
+int		skip_spaces(char *str, int i);
+void	init_data(t_data *data);
+int		copy_map(t_data *data, char *map_path);
+
+/*clean.c*/
+void	free_double(char **array);
+int		free_all(t_data *data);
 
 #endif
