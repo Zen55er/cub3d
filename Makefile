@@ -6,12 +6,12 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 10:10:00 by gacorrei          #+#    #+#              #
-#    Updated: 2023/08/28 14:29:11 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/08/29 09:10:15 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cub3D
-SRC			= map.c clean.c
+SRC			= map.c clean.c texture_validation.c
 LIBFT_DIR	= libft
 LIBFT		= libft/libft.a
 MLX_DIR		= minilibx-linux

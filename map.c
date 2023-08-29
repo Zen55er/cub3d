@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:18:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/28 16:02:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/29 09:45:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,6 @@ int	skip_spaces(char *str, int i)
 	while (ft_isspace(str[i]))
 		i++;
 	return (i);
-}
-
-int	validate_north(t_data *data, char **temp, int i)
-{
-	i += 2;
-	i = skip_spaces(temp, i);
-	if (data->n_path)
-		return (print_error("Duplicate texture"));
-	data->n_path = ft_substr(temp, i, ft_strlen(temp - i));
-	if (access(data->n_path, R_OK))
-		return (print_error("Invalid texture path"));
-}
-
-int	validate_texture(t_data *data, char *temp)
-{
-	int	i;
-
-	i = 0;
-	i = skip_spaces(temp, i);
-	if (temp[i] == 'N' && temp[i + 1] == 'O' && ft_isspace(temp[i + 2]))
-		return (validate_north(data, temp, i));
-	else if (temp[i] == 'S' && temp[i + 1] == 'O' && ft_isspace(temp[i + 2]))
-		return (validate_south(data, temp, i));
-	else if (temp[i] == 'W' && temp[i + 1] == 'E' && ft_isspace(temp[i + 2]))
-		return (validate_west(data, temp, i));
-	else if (temp[i] == 'E' && temp[i + 1] == 'A' && ft_isspace(temp[i + 2]))
-		return (validate_east(data, temp, i));
-	else if (temp[i] == 'F' && ft_isspace(temp[i + 1]))
-		return (validate_floor(data, temp, i));
-	else if (temp[i] == 'C' && ft_isspace(temp[i + 1]))
-		return (validate_ceiling(data, temp, i));
-	return (0);
 }
 
 int	validate_elements(t_data *data, int map_fd)
@@ -118,10 +86,12 @@ void	init_data(t_data *data)
 	data->map = 0;
 	data->map_x = 0;
 	data->map_y = 0;
-	data->n_path = 0;
-	data->s_path = 0;
-	data->w_path = 0;
-	data->e_path = 0;
+	data->nswe_paths[0] = 0;
+	data->nswe_paths[1] = 0;
+	data->nswe_paths[2] = 0;
+	data->nswe_paths[3] = 0;
+	data->floor = 0;
+	data->ceiling = 0;
 	return ;
 }
 

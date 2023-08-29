@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/28 11:08:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/29 11:00:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,30 @@
 # include "libft/libft.h"
 # include "minilibx-linux/mlx.h"
 
+/*For texture indexes: N = 0, S = 1, W = 2, E = 3*/
 typedef struct s_data
 {
-	char	**map;
-	int		map_x;
-	int		map_y;
-	char	*n_path;
-	char	*s_path;
-	char	*w_path;
-	char	*e_path;
-}			t_data;
+	char			**map;
+	int				map_x;
+	int				map_y;
+	char			*nswe_paths[4];
+	unsigned long	floor;
+	unsigned long	ceiling;
+}					t_data;
 
 /*map.c*/
 int		print_error(char *message);
 int		skip_spaces(char *str, int i);
-void	init_data(t_data *data);
+int		validate_elements(t_data *data, int map_fd);
 int		copy_map(t_data *data, char *map_path);
+void	init_data(t_data *data);
+
+/*texture_validation.c*/
+int		validate_compass(t_data *data, char *temp, int i, int index);
+int		validate_texture(t_data *data, char *temp);
 
 /*clean.c*/
-void	free_double(char **array);
+int		free_double(char ***array);
 int		free_all(t_data *data);
 
 #endif

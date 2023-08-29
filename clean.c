@@ -6,36 +6,32 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 11:00:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/28 11:08:28 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/29 11:18:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_double(char **array)
+int	free_double(char ***array)
 {
 	int	i;
 
 	i = -1;
-	while (array[++i])
-		free(array[i]);
-	return ;
+	while (*array[++i])
+		free(*array[i]);
+	free(*array);
+	return (1);
 }
 
 int	free_all(t_data *data)
 {
+	int	i;
+
+	i = -1;
 	if (data->map)
-	{
-		free_double(data->map);
-		free(data->map);
-	}
-	if (data->n_path)
-		free(data->n_path);
-	if (data->s_path)
-		free(data->s_path);
-	if (data->w_path)
-		free(data->w_path);
-	if (data->e_path)
-		free(data->e_path);
+		free_double(&data->map);
+	while (++i < 4)
+		if (data->nswe_paths[i])
+			free(data->nswe_paths[i]);
 	return (1);
 }
