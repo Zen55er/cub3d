@@ -6,11 +6,17 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 11:00:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/29 11:18:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/30 10:38:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	ft_free(void *ptr)
+{
+	free(ptr);
+	return (1);
+}
 
 int	free_double(char ***array)
 {

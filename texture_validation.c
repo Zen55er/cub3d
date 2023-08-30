@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:02:05 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/29 14:52:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/30 08:49:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,7 @@ int	test_colour(char *rgb)
 	return (0);
 }
 
-char	*get_hex(int n)
-{
-
-}
-
-char	*get_colour(char *rgb)
+int	get_colour(char *rgb)
 {
 	int		i;
 	int		r;
@@ -69,7 +64,7 @@ char	*get_colour(char *rgb)
 	g = ft_atoi(temp[1]);
 	b = ft_atoi(temp[2]);
 	free_double(&temp);
-	
+	return ((r << 16) + (g << 8) + b);
 }
 
 int	validate_colour(t_data *data, char *temp, int i, int flag)
@@ -82,6 +77,7 @@ int	validate_colour(t_data *data, char *temp, int i, int flag)
 		data->floor = get_colour(&temp[i]);
 	else if (flag && !test_colour(&temp[i]))
 		data->ceiling = get_colour(&temp[i]);
+	return (0);
 }
 
 int	validate_texture(t_data *data, char *temp)
