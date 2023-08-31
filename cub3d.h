@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/30 11:30:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/31 10:50:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,24 @@
 # include "libft/libft.h"
 # include "minilibx-linux/mlx.h"
 
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
 /*For texture indexes: N = 0, S = 1, W = 2, E = 3*/
 typedef struct s_data
 {
-	char	**map;
-	int		map_x;
-	int		map_y;
-	char	*nswe_paths[4];
-	int		floor;
-	int		ceiling;
-	int		count;
-}					t_data;
+	char		**map;
+	int			map_x;
+	int			map_y;
+	t_coord		map_start;
+	char		*nswe_paths[4];
+	int			floor;
+	int			ceiling;
+	int			count;
+}			t_data;
 
 /*map.c*/
 int		print_error(char *message);

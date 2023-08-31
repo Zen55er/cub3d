@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:00:02 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/06/30 18:15:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:13:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_printf(const char *str, ...);
 
 char	*get_next_line(int fd);
+char	*remove_nl(char *str);
+char	*gnl(int fd);
 char	*get_next_line_bonus(int fd);
 int		ft_strlen2(char *s);
 char	*ft_strjoin2(char *s1, char *s2);

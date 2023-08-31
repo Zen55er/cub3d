@@ -6,7 +6,7 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 10:10:00 by gacorrei          #+#    #+#              #
-#    Updated: 2023/08/29 09:10:15 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/08/31 11:31:59 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT		= libft/libft.a
 MLX_DIR		= minilibx-linux
 MLX_INCLUDE = -Imlx_linux
 CC			= @cc
-CFLAGS		= -Wall -Wextra -Werror -g3 -O3 -fsanitize=address,undefined
+CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address,undefined
 MLX_FLAGS 	= -L$(MLX_LIB_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 
 all:		$(NAME)

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:02:05 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/30 08:49:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:31:27 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	validate_compass(t_data *data, char *temp, int i, int index)
 	i = skip_spaces(temp, i);
 	if (data->nswe_paths[index])
 		return (print_error("Duplicate texture"));
-	data->nswe_paths[index] = ft_substr(temp, i, ft_strlen(temp - i));
+	data->nswe_paths[index] = ft_substr(temp, i, ft_strlen(temp) - i);
 	if (access(data->nswe_paths[index], R_OK))
 		return (print_error("Invalid texture path"));
 	return (0);

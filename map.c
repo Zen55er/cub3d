@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:18:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/30 16:46:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/31 16:27:20 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ int	validate_elements(t_data *data, int map_fd)
 
 	while (1)
 	{
-		temp = get_next_line(map_fd);
-		if (temp == -1)
-			return (print_error("Failed while reading map"));
+		temp = gnl(map_fd);
 		if (!temp)
 			return (print_error("Missing texture elements"));
 		data->count++;
@@ -66,12 +64,10 @@ int	get_map_dimensions(t_data *data, int map_fd)
 	flag = 0;
 	while (1)
 	{
-		temp = get_next_line(map_fd);
-		if (temp == -1)
-			return (print_error("Failed while reading map"));
+		temp = gnl(map_fd);
 		if (!temp)
 			break ;
-		if (temp[0] == '\n' && ft_free(temp) && data->count++)
+		if (!temp[0] && ft_free(temp) && data->count++)
 		{
 			if (!flag)
 				continue ;
@@ -79,7 +75,7 @@ int	get_map_dimensions(t_data *data, int map_fd)
 		}
 		flag = 1;
 		data->map_y++;
-		if (ft_strlen(temp) > data->map_x)
+		if ((int)ft_strlen(temp) > data->map_x)
 			data->map_x = ft_strlen(temp);
 		free(temp);
 	}
@@ -94,14 +90,73 @@ int	get_map(t_data *data, int map_fd)
 	i = -1;
 	while (1)
 	{
-		temp = get_next_line(map_fd);
-		if (temp == -1)
-			return (print_error("Failed while reading map"));
+		temp = gnl(map_fd);
 		if (!temp)
 			break ;
-		if (data->count-- && ft_free(temp))
+		if (data->count-- > 0 && ft_free(temp))
 			continue ;
 		data->map[++i] = temp;
+	}
+	return (0);
+}
+
+char	*add_spaces(char *str, int len)
+{
+	char	*temp;
+
+	temp = ft_strjoin_free(str, " ");
+	while (len - 1)
+		temp = ft_strjoin_free(temp, " ");
+	return (temp);
+}
+
+void	fill_edges(t_data *data)
+{
+	int		i;
+	int		len;
+
+	i = -1;
+	while (data->map[++i])
+	{
+		len = data->map_x - ft_strlen(data->map[i]);
+		if (len)
+			data->map[i] = add_spaces(data->map[i], len);
+	}
+	return ;
+}
+
+void	update_start(t_data *data, int x, int y)
+{
+	data->map_start.x = x;
+	data->map_start.y = y;
+	return ;
+}
+
+int	validate_map(t_data *data)
+{
+	int	i;
+	int	j;
+	int	start;
+
+	start = 0;
+	fill_edges(data);
+	j = -1;
+	while (data->map[++j])
+	{
+		i = -1;
+		while (data->map[j][++i])
+		{
+			if (data->map[j][i] != '0' && data->map[j][i] != '1'
+				&& data->map[j][i] != 'N' && data->map[j][i] != 'S'
+				&& data->map[j][i] != 'W' && data->map[j][i] != 'E')
+				return (print_error("Found forbidden character"));
+			if (!start && (data->map[j][i] == 'N' || data->map[j][i] == 'S'
+				|| data->map[j][i] == 'W' || data->map[j][i] == 'E') && ++start)
+				update_start(data, i, j);
+			else if (start && (data->map[j][i] == 'N' || data->map[j][i] == 'S'
+				|| data->map[j][i] == 'W' || data->map[j][i] == 'E'))
+				return (print_error("Found duplicate start position"));
+		}
 	}
 	return (0);
 }
@@ -109,8 +164,6 @@ int	get_map(t_data *data, int map_fd)
 int	map(t_data *data, char *map_path)
 {
 	int		map_fd;
-	char	*temp;
-	int		line_size;
 
 	if (access(map_path, F_OK))
 		return (print_error("Map can't be accessed"));
@@ -129,7 +182,10 @@ int	map(t_data *data, char *map_path)
 	data->map[data->map_y] = 0;
 	if (get_map(data, map_fd))
 		return (1);
-	//KEEP FROM HERE!!!!
+	close(map_fd);
+	if (validate_map(data))
+		return (1);
+	return (0);
 }
 
 void	init_data(t_data *data)
@@ -144,6 +200,18 @@ void	init_data(t_data *data)
 	data->floor = 0;
 	data->ceiling = 0;
 	data->count = 0;
+	data->map_start.x = 0;
+	data->map_start.y = 0;
+	return ;
+}
+
+void	print_map(char **map)
+{
+	int	i;
+
+	i = -1;
+	while (map[++i])
+		printf(":%s:\n", map[i]);
 	return ;
 }
 
@@ -156,4 +224,6 @@ int	main(int ac, char **av)
 	init_data(&data);
 	if (map(&data, av[1]))
 		return (free_all(&data));
+	print_map(data.map);
+	free_all(&data);
 }
