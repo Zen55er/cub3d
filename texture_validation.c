@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:02:05 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/31 15:31:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/31 16:29:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	test_colour(char *rgb)
 			if (!ft_isdigit(test[i][j]) && free_double(&test))
 				return (print_error("Wrong colour format"));
 	}
+	free_double(&test);
 	return (0);
 }
 
