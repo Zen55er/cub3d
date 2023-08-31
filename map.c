@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:18:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/31 16:27:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/08/31 16:50:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,12 @@ int	get_map(t_data *data, int map_fd)
 char	*add_spaces(char *str, int len)
 {
 	char	*temp;
+	int		i;
 
-	temp = ft_strjoin_free(str, " ");
-	while (len - 1)
-		temp = ft_strjoin_free(temp, " ");
+	temp = ft_strjoin_free(str, ft_strdup(" "));
+	i = -1;
+	while (++i < len - 1)
+		temp = ft_strjoin_free(temp, ft_strdup(" "));
 	return (temp);
 }
 
@@ -148,7 +150,8 @@ int	validate_map(t_data *data)
 		{
 			if (data->map[j][i] != '0' && data->map[j][i] != '1'
 				&& data->map[j][i] != 'N' && data->map[j][i] != 'S'
-				&& data->map[j][i] != 'W' && data->map[j][i] != 'E')
+				&& data->map[j][i] != 'W' && data->map[j][i] != 'E'
+				&& data->map[j][i] != ' ')
 				return (print_error("Found forbidden character"));
 			if (!start && (data->map[j][i] == 'N' || data->map[j][i] == 'S'
 				|| data->map[j][i] == 'W' || data->map[j][i] == 'E') && ++start)
