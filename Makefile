@@ -6,7 +6,7 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 10:10:00 by gacorrei          #+#    #+#              #
-#    Updated: 2023/08/31 11:31:59 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/09/01 14:47:21 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,18 @@ fclean:		clean
 			@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
 			@$(MAKE) --no-print-directory -C $(MLX_DIR) clean
 			@rm -f $(NAME)
+
+good:		all
+			@for file in ./maps/good/*; do \
+				echo "$$file"; \
+				./$(NAME) $$file; \
+			done
+
+wrong:		all
+			@for file in ./maps/wrong/*; do \
+				echo "$$file"; \
+				./$(NAME) $$file; \
+			done
 
 re:			fclean all
 

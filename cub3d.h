@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/01 09:35:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/01 09:56:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int		validate_elements(t_data *data, int map_fd);
 int		forbidden(char c);
 int		check_forbidden(char *temp);
 int		get_map_dimensions(t_data *data, int map_fd);
+int		edge_check(t_data *data);
+int		validate_map(t_data *data);
 int		map(t_data *data, char *map_path);
 void	init_data(t_data *data);
 

@@ -1,9 +1,9 @@
 F 220,100,0
-NO ./textures/north
+NO ./textures/north.xpm
 C 225,30,0
-SO ./textures/south
-WE ./textures/west
-EA ./textures/east
+SO ./textures/south.xpm
+WE ./textures/west.xpm
+EA ./textures/east.xpm
 
 
         1111111111111111111111111

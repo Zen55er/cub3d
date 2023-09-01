@@ -1,6 +1,6 @@
-NO xpm/bookshelf.xpm
-SO xpm/bookshelf_01.xpm
-WE xpm/bookshelf_02.xpm
+NO ./textures/north.xpm
+SO ./textures/south.xpm
+WE ./textures/west.xpm
 
 
 F 139,99,58

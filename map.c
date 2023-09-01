@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:18:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/01 09:46:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:03:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,59 @@ void	update_start(t_data *data, int x, int y)
 	return ;
 }
 
+int	path(char c)
+{
+	if (c == '0' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
+		return (1);
+	return (0);
+}
+
+int	quad_path(t_data *data, int i, int j)
+{
+	int	k;
+	int	l;
+	int	m;
+	int	n;
+
+	k = i;
+	while (k > 0 && data->map[j][++k] && path(data->map[j][k]))
+		continue ;
+	l = i;
+	while (l > 0 && data->map[j][--l] && path(data->map[j][l]))
+		continue ;
+	m = j;
+	while (m > 0 && data->map[++m][i] && path(data->map[j][k]))
+		continue ;
+	n = j;
+	while (n > 0 && data->map[--n][i] && path(data->map[j][k]))
+		continue ;
+	if (!data->map[j][k] || data->map[j][k] == ' '
+		|| !data->map[j][l] || data->map[j][l] == ' '
+		|| !data->map[m][i] || data->map[m][i] == ' '
+		|| !data->map[n][i] || data->map[n][i] == ' ')
+		return (print_error("Map is not surrounded by 1's"));
+	return (0);
+}
+
+int	edge_check(t_data *data)
+{
+	int	i;
+	int	j;
+
+	j = -1;
+	while (data->map[++j])
+	{
+		i = -1;
+		while (data->map[j][++i])
+			if (data->map[j][i] == '0' && quad_path(data, i, j))
+				return (1);
+	}
+	if (!data->map_start.x || data->map_start.x == data->map_x - 1
+		|| !data->map_start.y || data->map_start.y == data->map_y - 1)
+		return (print_error("Start position can't be on the edge of the map"));
+	return (0);
+}
+
 int	validate_map(t_data *data)
 {
 	int	i;
@@ -180,6 +233,8 @@ int	validate_map(t_data *data)
 	}
 	if (!data->map_start.x)
 		return (print_error("Start position missing"));
+	if (edge_check(data))
+		return (1);
 	return (0);
 }
 
@@ -236,6 +291,7 @@ void	print_map(char **map)
 	i = -1;
 	while (map[++i])
 		printf(":%s:\n", map[i]);
+	printf("\n");
 	return ;
 }
 

@@ -1,10 +1,7 @@
-R 500 500
-
-NO cub3d-tester/textures/wall.xpm
-SO cub3d-tester/textures/bricks.xpm
-WE cub3d-tester/textures/gold.xpm
-EA cub3d-tester/textures/wood.xpm
-S cub3d-tester/textures/enemy.xpm
+NO ./textures/north.xpm
+SO ./textures/south.xpm
+WE ./textures/west.xpm
+EA ./textures/east.xpm
 F 220,111,119
 C 225,111,0
 
@@ -18,6 +15,6 @@ C 225,111,0
       100000000001
        1000000001
         10000001
-         102201
+         101101
           1001
            11
