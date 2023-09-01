@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:18:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/31 16:50:31 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/01 09:46:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	skip_spaces(char *str, int i)
 int	elements_ok(t_data *data)
 {
 	if (data->nswe_paths[0] && data->nswe_paths[1] && data->nswe_paths[2]
-		&& data->nswe_paths[3] && data->floor && data->ceiling)
+		&& data->nswe_paths[3] && data->floor >= 0 && data->ceiling >= 0)
 		return (1);
 	return (0);
 }
@@ -44,15 +44,34 @@ int	validate_elements(t_data *data, int map_fd)
 		if (!temp)
 			return (print_error("Missing texture elements"));
 		data->count++;
-		if (temp[0] != '\n' && validate_texture(data, temp))
+		if (temp[0] != 0 && validate_texture(data, temp))
 		{
 			free(temp);
-			break ;
+			return (1);
 		}
 		free(temp);
 		if (elements_ok(data))
 			break ;
 	}
+	return (0);
+}
+
+int	forbidden(char c)
+{
+	if (c != '0' && c != '1' && c != 'N' && c != 'S'
+		&& c != 'W' && c != 'E' && c != ' ')
+		return (1);
+	return (0);
+}
+
+int	check_forbidden(char *temp)
+{
+	int	i;
+
+	i = -1;
+	while (temp[++i])
+		if (forbidden(temp[i]))
+			return (print_error("Found extra element or forbidden character"));
 	return (0);
 }
 
@@ -73,12 +92,15 @@ int	get_map_dimensions(t_data *data, int map_fd)
 				continue ;
 			return (print_error("Empty line on map"));
 		}
+		else if (check_forbidden(temp) && ft_free(temp))
+			return (1);
 		flag = 1;
-		data->map_y++;
-		if ((int)ft_strlen(temp) > data->map_x)
+		if (++data->map_y && (int)ft_strlen(temp) > data->map_x)
 			data->map_x = ft_strlen(temp);
 		free(temp);
 	}
+	if (!data->map_x)
+		return (print_error("Map not found"));
 	return (0);
 }
 
@@ -148,11 +170,6 @@ int	validate_map(t_data *data)
 		i = -1;
 		while (data->map[j][++i])
 		{
-			if (data->map[j][i] != '0' && data->map[j][i] != '1'
-				&& data->map[j][i] != 'N' && data->map[j][i] != 'S'
-				&& data->map[j][i] != 'W' && data->map[j][i] != 'E'
-				&& data->map[j][i] != ' ')
-				return (print_error("Found forbidden character"));
 			if (!start && (data->map[j][i] == 'N' || data->map[j][i] == 'S'
 				|| data->map[j][i] == 'W' || data->map[j][i] == 'E') && ++start)
 				update_start(data, i, j);
@@ -161,6 +178,8 @@ int	validate_map(t_data *data)
 				return (print_error("Found duplicate start position"));
 		}
 	}
+	if (!data->map_start.x)
+		return (print_error("Start position missing"));
 	return (0);
 }
 
@@ -172,6 +191,8 @@ int	map(t_data *data, char *map_path)
 		return (print_error("Map can't be accessed"));
 	if (access(map_path, R_OK))
 		return (print_error("Map does not have read permission"));
+	if (ft_strcmp((map_path + (ft_strlen(map_path) - 4)), ".cub"))
+		return (print_error("Map needs to have .cub file name extension"));
 	map_fd = open(map_path, O_RDONLY, 0644);
 	if (map_fd == -1)
 		return (print_error("Failed to open map"));
@@ -200,8 +221,8 @@ void	init_data(t_data *data)
 	data->nswe_paths[1] = 0;
 	data->nswe_paths[2] = 0;
 	data->nswe_paths[3] = 0;
-	data->floor = 0;
-	data->ceiling = 0;
+	data->floor = -1;
+	data->ceiling = -1;
 	data->count = 0;
 	data->map_start.x = 0;
 	data->map_start.y = 0;

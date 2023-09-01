@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:02:05 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/31 16:29:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/01 08:54:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	validate_compass(t_data *data, char *temp, int i, int index)
 	i = skip_spaces(temp, i);
 	if (data->nswe_paths[index])
 		return (print_error("Duplicate texture"));
+	if (ft_strcmp((temp + (ft_strlen(temp) - 4)), ".xpm"))
+		return (print_error("Texture is not in .xmp format"));
 	data->nswe_paths[index] = ft_substr(temp, i, ft_strlen(temp) - i);
 	if (access(data->nswe_paths[index], R_OK))
 		return (print_error("Invalid texture path"));
@@ -72,12 +74,14 @@ int	validate_colour(t_data *data, char *temp, int i, int flag)
 {
 	i++;
 	i = skip_spaces(temp, i);
-	if ((!flag && data->floor) || (flag && data->ceiling))
+	if ((!flag && data->floor != -1) || (flag && data->ceiling != -1))
 		return (print_error("Duplicate colour"));
 	if (!flag && !test_colour(&temp[i]))
 		data->floor = get_colour(&temp[i]);
 	else if (flag && !test_colour(&temp[i]))
 		data->ceiling = get_colour(&temp[i]);
+	if ((!flag && data->floor == -1) || (flag && data->ceiling == -1))
+		return (1);
 	return (0);
 }
 

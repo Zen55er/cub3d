@@ -5,7 +5,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/cub3D",
-            "args": ["maps/minimalist.cub"],
+            "args": ["maps/wrong/map-no-0.cub"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
