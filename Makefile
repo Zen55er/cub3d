@@ -6,27 +6,27 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 10:10:00 by gacorrei          #+#    #+#              #
-#    Updated: 2023/09/04 09:33:18 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/09/04 13:20:26 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cub3D
 SRC			= main.c map.c validate_elements.c texture_validation.c \
-			validate_map.c validate_map_edge.c clean.c
+			validate_map.c validate_map_edge.c mlx.c clean.c
 LIBFT_DIR	= libft
 LIBFT		= libft/libft.a
 MLX_DIR		= minilibx-linux
-MLX_INCLUDE = -Imlx_linux
+MLX_INCLUDE = -Iminilibx-linux
 CC			= @cc
 CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address,undefined
-MLX_FLAGS 	= -L$(MLX_LIB_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
+MLX_FLAGS 	= -L$(MLX_DIR) -lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm
 
 all:		$(NAME)
 
 $(NAME):	$(SRC)
 			@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
 			@$(MAKE) --no-print-directory -C $(MLX_DIR)
-			$(CC) $(CFLAGS) $(^) -o $(@) $(LIBFT)
+			$(CC) $(CFLAGS) $(^) $(MLX_FLAGS) -o $(@) $(LIBFT)
 
 clean:
 			@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean

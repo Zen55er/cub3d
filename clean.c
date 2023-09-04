@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 11:00:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/08/31 11:52:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:57:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	free_double(char ***array)
 	return (1);
 }
 
+void	free_window(t_data *data)
+{
+	mlx_destroy_display(data->init);
+	free(data->init);
+	return ;
+}
+
 int	free_all(t_data *data)
 {
 	int	i;
@@ -38,7 +45,18 @@ int	free_all(t_data *data)
 	if (data->map)
 		free_double(&data->map);
 	while (++i < 4)
+	{
 		if (data->nswe_paths[i])
 			free(data->nswe_paths[i]);
+		if (data->nswe_images)
+		{
+			if (data->nswe_images[i])
+				mlx_destroy_image(data->init, data->nswe_images[i]);
+			if (i == 3)
+				free(data->nswe_images);
+		}
+	}
+	if (data->window)
+		free_window(data);
 	return (1);
 }

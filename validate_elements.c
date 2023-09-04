@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:05:15 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 09:05:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:34:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	skip_spaces(char *str, int i)
 {
-	while (ft_isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
 	return (i);
 }

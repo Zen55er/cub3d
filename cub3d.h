@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 09:17:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/04 11:51:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <math.h>
 # include <X11/keysym.h>
 # include "libft/libft.h"
+# include "minilibx-linux/mlx_int.h"
 # include "minilibx-linux/mlx.h"
 
 typedef struct s_coord
@@ -37,9 +38,12 @@ typedef struct s_data
 	int			map_y;
 	t_coord		map_start;
 	char		*nswe_paths[4];
+	void		**nswe_images;
 	int			floor;
 	int			ceiling;
 	int			count;
+	void		*init;
+	void		*window;
 }			t_data;
 
 /*main.c*/
@@ -75,9 +79,17 @@ int		path(char c);
 int		holes(t_data *data, int i, int j);
 int		edge_check(t_data *data);
 
+/*mlx.c*/
+int		no_event(t_data *data);
+int		key_release(int key, t_data *data);
+int		close_window(t_data *data);
+int		open_images(t_data *data);
+int		mlx(t_data *data);
+
 /*clean.c*/
 int		ft_free(void *ptr);
 int		free_double(char ***array);
+void	free_window(t_data *data);
 int		free_all(t_data *data);
 
 #endif

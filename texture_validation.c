@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:02:05 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 08:49:17 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:35:51 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	validate_compass(t_data *data, char *temp, int i, int index)
 {
 	i += 2;
 	i = skip_spaces(temp, i);
+	if (!temp[i])
+		return (print_error("Invalid texture path"));
 	if (data->nswe_paths[index])
 		return (print_error("Duplicate texture"));
 	if (ft_strcmp((temp + (ft_strlen(temp) - 4)), ".xpm"))
@@ -55,13 +57,11 @@ int	test_colour(char *rgb)
 
 int	get_colour(char *rgb)
 {
-	int		i;
 	int		r;
 	int		g;
 	int		b;
 	char	**temp;
 
-	i = -1;
 	temp = ft_split(rgb, ',');
 	r = ft_atoi(temp[0]);
 	g = ft_atoi(temp[1]);
@@ -90,6 +90,8 @@ int	validate_texture(t_data *data, char *temp)
 	int	i;
 
 	i = 0;
+	if (strlen(temp) < 3)
+		return (print_error("Misconfigured map file elements"));
 	i = skip_spaces(temp, i);
 	if (temp[i] == 'N' && temp[i + 1] == 'O' && ft_isspace(temp[i + 2]))
 		return (validate_compass(data, temp, i, 0));
