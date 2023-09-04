@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:18:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/01 15:03:24 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/04 08:46:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int	path(char c)
 	return (0);
 }
 
-int	quad_path(t_data *data, int i, int j)
+int	holes(t_data *data, int i, int j)
 {
 	int	k;
 	int	l;
@@ -186,7 +186,7 @@ int	quad_path(t_data *data, int i, int j)
 		|| !data->map[j][l] || data->map[j][l] == ' '
 		|| !data->map[m][i] || data->map[m][i] == ' '
 		|| !data->map[n][i] || data->map[n][i] == ' ')
-		return (print_error("Map is not surrounded by 1's"));
+		return (1);
 	return (0);
 }
 
@@ -200,8 +200,10 @@ int	edge_check(t_data *data)
 	{
 		i = -1;
 		while (data->map[j][++i])
-			if (data->map[j][i] == '0' && quad_path(data, i, j))
-				return (1);
+			if (data->map[j][i] == '0')
+				if (j == 0 || j == data->map_y - 1 || i == 0
+					|| holes(data, i, j))
+					return (print_error("Map is not surrounded by 1's"));
 	}
 	if (!data->map_start.x || data->map_start.x == data->map_x - 1
 		|| !data->map_start.y || data->map_start.y == data->map_y - 1)

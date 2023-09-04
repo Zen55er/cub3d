@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:02:05 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/01 08:54:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/04 08:49:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	validate_compass(t_data *data, char *temp, int i, int index)
 	if (data->nswe_paths[index])
 		return (print_error("Duplicate texture"));
 	if (ft_strcmp((temp + (ft_strlen(temp) - 4)), ".xpm"))
-		return (print_error("Texture is not in .xmp format"));
+		return (print_error("Texture is not in .xpm format"));
 	data->nswe_paths[index] = ft_substr(temp, i, ft_strlen(temp) - i);
 	if (access(data->nswe_paths[index], R_OK))
 		return (print_error("Invalid texture path"));

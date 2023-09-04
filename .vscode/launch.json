@@ -5,7 +5,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/cub3D",
-            "args": ["./maps/wrong/wall_hole_south.cub"],
+            "args": ["./maps/wrong/wall_hole_north.cub"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
