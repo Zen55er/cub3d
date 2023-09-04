@@ -6,63 +6,11 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:18:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 08:46:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/04 09:16:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	print_error(char *message)
-{
-	printf("Error\n");
-	printf("%s\n", message);
-	return (1);
-}
-
-int	skip_spaces(char *str, int i)
-{
-	while (ft_isspace(str[i]))
-		i++;
-	return (i);
-}
-
-int	elements_ok(t_data *data)
-{
-	if (data->nswe_paths[0] && data->nswe_paths[1] && data->nswe_paths[2]
-		&& data->nswe_paths[3] && data->floor >= 0 && data->ceiling >= 0)
-		return (1);
-	return (0);
-}
-
-int	validate_elements(t_data *data, int map_fd)
-{
-	char	*temp;
-
-	while (1)
-	{
-		temp = gnl(map_fd);
-		if (!temp)
-			return (print_error("Missing texture elements"));
-		data->count++;
-		if (temp[0] != 0 && validate_texture(data, temp))
-		{
-			free(temp);
-			return (1);
-		}
-		free(temp);
-		if (elements_ok(data))
-			break ;
-	}
-	return (0);
-}
-
-int	forbidden(char c)
-{
-	if (c != '0' && c != '1' && c != 'N' && c != 'S'
-		&& c != 'W' && c != 'E' && c != ' ')
-		return (1);
-	return (0);
-}
 
 int	check_forbidden(char *temp)
 {
@@ -70,7 +18,8 @@ int	check_forbidden(char *temp)
 
 	i = -1;
 	while (temp[++i])
-		if (forbidden(temp[i]))
+		if (temp[i] != '0' && temp[i] != '1' && temp[i] != 'N' && temp[i] != 'S'
+			&& temp[i] != 'W' && temp[i] != 'E' && temp[i] != ' ')
 			return (print_error("Found extra element or forbidden character"));
 	return (0);
 }
@@ -122,124 +71,6 @@ int	get_map(t_data *data, int map_fd)
 	return (0);
 }
 
-char	*add_spaces(char *str, int len)
-{
-	char	*temp;
-	int		i;
-
-	temp = ft_strjoin_free(str, ft_strdup(" "));
-	i = -1;
-	while (++i < len - 1)
-		temp = ft_strjoin_free(temp, ft_strdup(" "));
-	return (temp);
-}
-
-void	fill_edges(t_data *data)
-{
-	int		i;
-	int		len;
-
-	i = -1;
-	while (data->map[++i])
-	{
-		len = data->map_x - ft_strlen(data->map[i]);
-		if (len)
-			data->map[i] = add_spaces(data->map[i], len);
-	}
-	return ;
-}
-
-void	update_start(t_data *data, int x, int y)
-{
-	data->map_start.x = x;
-	data->map_start.y = y;
-	return ;
-}
-
-int	path(char c)
-{
-	if (c == '0' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		return (1);
-	return (0);
-}
-
-int	holes(t_data *data, int i, int j)
-{
-	int	k;
-	int	l;
-	int	m;
-	int	n;
-
-	k = i;
-	while (k > 0 && data->map[j][++k] && path(data->map[j][k]))
-		continue ;
-	l = i;
-	while (l > 0 && data->map[j][--l] && path(data->map[j][l]))
-		continue ;
-	m = j;
-	while (m > 0 && data->map[++m][i] && path(data->map[j][k]))
-		continue ;
-	n = j;
-	while (n > 0 && data->map[--n][i] && path(data->map[j][k]))
-		continue ;
-	if (!data->map[j][k] || data->map[j][k] == ' '
-		|| !data->map[j][l] || data->map[j][l] == ' '
-		|| !data->map[m][i] || data->map[m][i] == ' '
-		|| !data->map[n][i] || data->map[n][i] == ' ')
-		return (1);
-	return (0);
-}
-
-int	edge_check(t_data *data)
-{
-	int	i;
-	int	j;
-
-	j = -1;
-	while (data->map[++j])
-	{
-		i = -1;
-		while (data->map[j][++i])
-			if (data->map[j][i] == '0')
-				if (j == 0 || j == data->map_y - 1 || i == 0
-					|| holes(data, i, j))
-					return (print_error("Map is not surrounded by 1's"));
-	}
-	if (!data->map_start.x || data->map_start.x == data->map_x - 1
-		|| !data->map_start.y || data->map_start.y == data->map_y - 1)
-		return (print_error("Start position can't be on the edge of the map"));
-	return (0);
-}
-
-int	validate_map(t_data *data)
-{
-	int	i;
-	int	j;
-	int	start;
-
-	start = 0;
-	fill_edges(data);
-	j = -1;
-	while (data->map[++j])
-	{
-		i = -1;
-		while (data->map[j][++i])
-		{
-			if (!start && (data->map[j][i] == 'N' || data->map[j][i] == 'S'
-				|| data->map[j][i] == 'W' || data->map[j][i] == 'E') && ++start)
-				update_start(data, i, j);
-			else if (start && (data->map[j][i] == 'N' || data->map[j][i] == 'S'
-				|| data->map[j][i] == 'W' || data->map[j][i] == 'E'))
-				return (print_error("Found duplicate start position"));
-		}
-	}
-	if (!data->map_start.x)
-		return (print_error("Start position missing"));
-	if (edge_check(data))
-		return (1);
-	return (0);
-}
-
 int	map(t_data *data, char *map_path)
 {
 	int		map_fd;
@@ -267,45 +98,4 @@ int	map(t_data *data, char *map_path)
 	if (validate_map(data))
 		return (1);
 	return (0);
-}
-
-void	init_data(t_data *data)
-{
-	data->map = 0;
-	data->map_x = 0;
-	data->map_y = 0;
-	data->nswe_paths[0] = 0;
-	data->nswe_paths[1] = 0;
-	data->nswe_paths[2] = 0;
-	data->nswe_paths[3] = 0;
-	data->floor = -1;
-	data->ceiling = -1;
-	data->count = 0;
-	data->map_start.x = 0;
-	data->map_start.y = 0;
-	return ;
-}
-
-void	print_map(char **map)
-{
-	int	i;
-
-	i = -1;
-	while (map[++i])
-		printf(":%s:\n", map[i]);
-	printf("\n");
-	return ;
-}
-
-int	main(int ac, char **av)
-{
-	t_data	data;
-
-	if (ac != 2)
-		return (print_error("Usage: ./cub3d path_to_map"));
-	init_data(&data);
-	if (map(&data, av[1]))
-		return (free_all(&data));
-	print_map(data.map);
-	free_all(&data);
 }

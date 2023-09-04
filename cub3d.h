@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/01 09:56:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/04 09:17:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,20 @@ typedef struct s_data
 	int			count;
 }			t_data;
 
-/*map.c*/
+/*main.c*/
 int		print_error(char *message);
+void	init_data(t_data *data);
+
+/*map.c*/
+int		check_forbidden(char *temp);
+int		get_map_dimensions(t_data *data, int map_fd);
+int		get_map(t_data *data, int map_fd);
+int		map(t_data *data, char *map_path);
+
+/*validate_elements.c*/
 int		skip_spaces(char *str, int i);
 int		elements_ok(t_data *data);
 int		validate_elements(t_data *data, int map_fd);
-int		forbidden(char c);
-int		check_forbidden(char *temp);
-int		get_map_dimensions(t_data *data, int map_fd);
-int		edge_check(t_data *data);
-int		validate_map(t_data *data);
-int		map(t_data *data, char *map_path);
-void	init_data(t_data *data);
 
 /*texture_validation.c*/
 int		validate_compass(t_data *data, char *temp, int i, int index);
@@ -61,6 +63,17 @@ int		test_colour(char *rgb);
 int		get_colour(char *rgb);
 int		validate_colour(t_data *data, char *temp, int i, int flag);
 int		validate_texture(t_data *data, char *temp);
+
+/*validate_map.c*/
+char	*add_spaces(char *str, int len);
+void	fill_edges(t_data *data);
+void	update_start(t_data *data, int x, int y);
+int		validate_map(t_data *data);
+
+/*validate_map_edge.c*/
+int		path(char c);
+int		holes(t_data *data, int i, int j);
+int		edge_check(t_data *data);
 
 /*clean.c*/
 int		ft_free(void *ptr);
