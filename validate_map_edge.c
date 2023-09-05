@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:13:35 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 09:15:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:32:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*Returns 1 if entry is floor or player*/
 int	path(char c)
 {
 	if (c == '0' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
@@ -19,6 +20,7 @@ int	path(char c)
 	return (0);
 }
 
+/*Checks if edges have anything other than 1's*/
 int	holes(t_data *data, int i, int j)
 {
 	int	k;
@@ -46,6 +48,8 @@ int	holes(t_data *data, int i, int j)
 	return (0);
 }
 
+/*Iterates through map to check for holes in the walls
+or incorrect player position*/
 int	edge_check(t_data *data)
 {
 	int	i;

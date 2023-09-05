@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:02:05 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 13:35:51 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:26:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*Validates current element, if ok, keeps the path to the texture in memory*/
 int	validate_compass(t_data *data, char *temp, int i, int index)
 {
 	i += 2;
@@ -28,6 +29,7 @@ int	validate_compass(t_data *data, char *temp, int i, int index)
 	return (0);
 }
 
+/*Tests RGB format*/
 int	test_colour(char *rgb)
 {
 	int		i;
@@ -55,6 +57,7 @@ int	test_colour(char *rgb)
 	return (0);
 }
 
+/*Returns converted colour*/
 int	get_colour(char *rgb)
 {
 	int		r;
@@ -70,6 +73,7 @@ int	get_colour(char *rgb)
 	return ((r << 16) + (g << 8) + b);
 }
 
+/*Tests current colour line*/
 int	validate_colour(t_data *data, char *temp, int i, int flag)
 {
 	i++;
@@ -85,6 +89,7 @@ int	validate_colour(t_data *data, char *temp, int i, int flag)
 	return (0);
 }
 
+/*Tests current texture line*/
 int	validate_texture(t_data *data, char *temp)
 {
 	int	i;

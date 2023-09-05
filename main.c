@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 13:44:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:14:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ void	print_map(char **map)
 	return ;
 }
 
+/*Prints error messages according to subject*/
 int	print_error(char *message)
 {
 	printf("Error\n%s\n", message);
 	return (1);
 }
 
+/*Initializes data members*/
 void	init_data(t_data *data)
 {
 	data->map = 0;

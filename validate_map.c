@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:11:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 09:28:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:36:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*Adds spaces to map line that are smaller than the largest x value found*/
 char	*add_spaces(char *str, int len)
 {
 	char	*temp;
@@ -24,6 +25,8 @@ char	*add_spaces(char *str, int len)
 	return (temp);
 }
 
+/*Checks if current line is smaller than the largest x value
+to call add_spaces*/
 void	fill_edges(t_data *data)
 {
 	int		i;
@@ -39,6 +42,7 @@ void	fill_edges(t_data *data)
 	return ;
 }
 
+/*Updates player start position*/
 void	update_start(t_data *data, int x, int y)
 {
 	data->map_start.x = x;
@@ -46,6 +50,8 @@ void	update_start(t_data *data, int x, int y)
 	return ;
 }
 
+/*Calls functions to complete smaller lines,
+update start position and check for bad walls*/
 int	validate_map(t_data *data)
 {
 	int	i;

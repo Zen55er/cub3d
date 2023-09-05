@@ -6,24 +6,27 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 13:58:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:20:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*Handles no event cases*/
 int	no_event(t_data *data)
 {
 	(void)data;
 	return (0);
 }
 
+/*Frees window*/
 int	close_window(t_data *data)
 {
 	mlx_destroy_window(data->init, data->window);
 	return (0);
 }
 
+/*Begins movement and turning logic*/
 int	key_release(int key, t_data *data)
 {
 	if (key == XK_Escape)
@@ -43,6 +46,7 @@ int	key_release(int key, t_data *data)
 	return (0);
 }
 
+/*Copies images to memory*/
 int	open_images(t_data *data)
 {
 	int	i;
@@ -58,6 +62,7 @@ int	open_images(t_data *data)
 	return (0);
 }
 
+/*Creates mlx loops for game to run*/
 int	mlx(t_data *data)
 {
 	data->init = mlx_init();

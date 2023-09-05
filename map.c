@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:18:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 09:16:24 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:18:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*Returns error if there is a forbidden value in map line*/
 int	check_forbidden(char *temp)
 {
 	int	i;
@@ -24,6 +25,8 @@ int	check_forbidden(char *temp)
 	return (0);
 }
 
+/*Gets x and y max values in map while checking
+for forbidden values and empty lines*/
 int	get_map_dimensions(t_data *data, int map_fd)
 {
 	char	*temp;
@@ -53,6 +56,7 @@ int	get_map_dimensions(t_data *data, int map_fd)
 	return (0);
 }
 
+/*Copies map info to memory*/
 int	get_map(t_data *data, int map_fd)
 {
 	char	*temp;
@@ -71,6 +75,8 @@ int	get_map(t_data *data, int map_fd)
 	return (0);
 }
 
+/*Performs basic checks for the map file, validates texture and colour elements,
+gets map dimensions, copies map to memory and validates map*/
 int	map(t_data *data, char *map_path)
 {
 	int		map_fd;
