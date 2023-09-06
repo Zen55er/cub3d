@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/04 11:51:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/06 09:25:15 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		mlx(t_data *data);
 
 /*clean.c*/
 int		ft_free(void *ptr);
-int		free_double(char ***array);
+int		free_double(char **array);
 void	free_window(t_data *data);
 int		free_all(t_data *data);
 

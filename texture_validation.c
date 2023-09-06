@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:02:05 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/05 13:26:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/06 09:26:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ int	test_colour(char *rgb)
 		return (print_error("Wrong colour format"));
 	test = ft_split(rgb, ',');
 	if (!test || ((!test[0] || !test[1] || !test[2] || test[3])
-			&& free_double(&test)))
+			&& free_double(test)))
 		return (print_error("Wrong colour format"));
 	while (test[++i])
 	{
 		j = -1;
 		if ((ft_strlen(test[i]) > 3 || ft_atoi(test[i]) > 255)
-			&& free_double(&test))
+			&& free_double(test))
 			return (print_error("Wrong colour format"));
 		while (test[i][++j])
-			if (!ft_isdigit(test[i][j]) && free_double(&test))
+			if (!ft_isdigit(test[i][j]) && free_double(test))
 				return (print_error("Wrong colour format"));
 	}
-	free_double(&test);
+	free_double(test);
 	return (0);
 }
 
@@ -69,7 +69,7 @@ int	get_colour(char *rgb)
 	r = ft_atoi(temp[0]);
 	g = ft_atoi(temp[1]);
 	b = ft_atoi(temp[2]);
-	free_double(&temp);
+	free_double(temp);
 	return ((r << 16) + (g << 8) + b);
 }
 

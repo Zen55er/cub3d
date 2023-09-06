@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 11:00:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/05 13:13:52 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/06 09:25:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	ft_free(void *ptr)
 }
 
 /*Receives address of 2d array to free everything*/
-int	free_double(char ***array)
+int	free_double(char **array)
 {
 	int	i;
 
 	i = -1;
-	while ((*array)[++i])
-		free((*array)[i]);
-	free(*array);
-	*array = 0;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+	array = 0;
 	return (1);
 }
 
@@ -48,7 +48,7 @@ int	free_all(t_data *data)
 
 	i = -1;
 	if (data->map)
-		free_double(&data->map);
+		free_double(data->map);
 	while (++i < 4)
 	{
 		if (data->nswe_paths[i])
