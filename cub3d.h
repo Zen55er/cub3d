@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/06 09:25:15 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:31:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,22 @@
 # include "minilibx-linux/mlx_int.h"
 # include "minilibx-linux/mlx.h"
 
+# define WINDOW_WIDTH 1600
+# define WINDOW_HEIGHT 900
+# define TEXTURE_W_H 360
+# define FOV_FACTOR 0.66
+
 typedef struct s_coord
 {
 	int	x;
 	int	y;
 }	t_coord;
+
+typedef struct s_coord_d
+{
+	double	x;
+	double	y;
+}	t_coord_d;
 
 /*For texture indexes: N = 0, S = 1, W = 2, E = 3*/
 typedef struct s_data
@@ -44,7 +55,21 @@ typedef struct s_data
 	int			count;
 	void		*init;
 	void		*window;
-}			t_data;
+	char		*buffer[WINDOW_HEIGHT][WINDOW_WIDTH];
+	t_coord		direction;
+	t_coord		camera;
+	int			fov;
+	time_t		time;
+	time_t		old_time;
+	double		cam_x;
+	t_coord_d	ray_dir;
+	t_coord_d	pos;
+	t_coord		m_pos;
+	t_coord_d	side_dist;
+	t_coord_d	d_dist;
+	double		perp_wall_dist;
+	t_coord		step;
+}				t_data;
 
 /*main.c*/
 int		print_error(char *message);

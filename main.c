@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/05 13:14:28 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:31:54 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	init_data(t_data *data)
 	data->count = 0;
 	data->map_start.x = 0;
 	data->map_start.y = 0;
+	data->pos.x = data->map_start.x;
+	data->pos.y = data->map_start.y;
 	data->init = 0;
 	data->window = 0;
 	return ;
