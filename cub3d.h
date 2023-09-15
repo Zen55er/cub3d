@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/14 16:31:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/15 13:35:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ typedef struct s_coord_d
 	double	y;
 }	t_coord_d;
 
+typedef struct s_img
+{
+	void	*mlx_img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}			t_img;
+
 /*For texture indexes: N = 0, S = 1, W = 2, E = 3*/
 typedef struct s_data
 {
@@ -55,12 +64,11 @@ typedef struct s_data
 	int			count;
 	void		*init;
 	void		*window;
-	char		*buffer[WINDOW_HEIGHT][WINDOW_WIDTH];
+	t_img		*image;
+	char		buffer[WINDOW_HEIGHT + 1][WINDOW_WIDTH + 1];
 	t_coord		direction;
 	t_coord		camera;
 	int			fov;
-	time_t		time;
-	time_t		old_time;
 	double		cam_x;
 	t_coord_d	ray_dir;
 	t_coord_d	pos;
@@ -69,6 +77,10 @@ typedef struct s_data
 	t_coord_d	d_dist;
 	double		perp_wall_dist;
 	t_coord		step;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
 }				t_data;
 
 /*main.c*/

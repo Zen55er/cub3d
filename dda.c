@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/14 16:14:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/15 13:48:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	pre_dda(t_data *data)
 	}
 }
 
-void	stepper(tdata *data, int flag)
+void	stepper(t_data *data, int flag)
 {
 	if (!flag)
 	{
@@ -117,26 +117,24 @@ void	stepper(tdata *data, int flag)
 void	dda(t_data *data)
 {
 	int	hit;
-	int	side;
 
 	hit = 0;
-	side = -1;
 	while (!hit)
 	{
 		if (data->side_dist.x < data->side_dist.y)
 		{
 			stepper(data, 0);
-			side = 0;
+			data->side = 0;
 		}
 		else
 		{
 			stepper(data, 1);
-			side = 1;
+			data->side = 1;
 		}
 		if (data->map[data->m_pos.y][data->m_pos.x] == 1)
 			hit = 1;
 	}
-	if (!side)
+	if (!data->side)
 		data->perp_wall_dist = data->side_dist.x - data->d_dist.x;
 	else
 		data->perp_wall_dist = data->side_dist.y - data->d_dist.y;
@@ -144,27 +142,84 @@ void	dda(t_data *data)
 
 void	post_dda(t_data *data)
 {
-	int	line_height;
-	int	draw_start;
-	int	draw_end;
-	// int	pitch; TEST
+	// int	pitch; TEST IF OFFSET
 
-	line_height = (int)(WINDOW_HEIGHT / data->perp_wall_dist);
-	draw_start = (WINDOW_HEIGHT - line_height) / 2 /* + pitch */;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = (WINDOW_HEIGHT + line_height) / 2 /* + pitch */;
-	if (draw_end < 0)
-		draw_end = WINDOW_HEIGHT - 1;
+	data->line_height = (int)(WINDOW_HEIGHT / data->perp_wall_dist);
+	data->draw_start = (WINDOW_HEIGHT - data->line_height) / 2 /* + pitch */;
+	if (data->draw_start < 0)
+		data->draw_start = 0;
+	data->draw_end = (WINDOW_HEIGHT + data->line_height) / 2 /* + pitch */;
+	if (data->draw_end < 0)
+		data->draw_end = WINDOW_HEIGHT - 1;
 }
 
 void	calc_textures(t_data *data)
 {
+	int		i;
 	int		tex_num;
 	t_coord	tex;
 	double	wall_x;
 	double	step;
 	double	tex_pos;
+	int		colour;
 
-	
+	tex_num = data->map[data->m_pos.y][data->m_pos.x] - 1;
+	if (!data->side)
+		wall_x = data->pos.y + data->perp_wall_dist * data->ray_dir.y;
+	else
+		wall_x = data->pos.x + data->perp_wall_dist * data->ray_dir.x;
+	wall_x -= floor(wall_x);
+	tex.x = (int)(wall_x * (double)TEXTURE_W_H);
+	if (!data->side && data->ray_dir.x > 0)
+		tex.x = TEXTURE_W_H - tex.x - 1;
+	else if (data->side && data->ray_dir.y < 0)
+		tex.x = TEXTURE_W_H - tex.x - 1;
+	step = 1.0 * TEXTURE_W_H / data->line_height;
+	tex_pos = (data->draw_start /*- pitch*/ + (data->line_height - WINDOW_HEIGHT) / 2) * step;
+	i = data->draw_start;
+	while (i < data->draw_end)
+	{
+		tex.y = (int)tex_pos & (TEXTURE_W_H - 1);
+		tex_pos += step;
+		colour = data->nswe_images[tex_num][TEXTURE_W_H * tex.y + tex.x];
+		/* Making colour darker. Decide if it stays;
+		if (data->side)
+			colour = (colour >> 1) & 8355711; */
+		/*CHECK IF INDEXES ARE IN THE RIGHT PLACE!!!!!*/
+		data->buffer[i][pre_dda i] = colour;
+	}
+}
+
+void	put_pixel(t_img *img, int i, int j, int colour)
+{
+	int	pixel;
+
+	pixel = j * (img->line_len / 4) + i;
+	img->addr[pixel] = colour;
+}
+
+void	buffer_to_image(t_data *data, int i, int j)
+{
+	if (data->buffer[j][i] > 0)
+		put_pixel(data->image, i, j, data->buffer[j][i]);
+	else if (j < WINDOW_HEIGHT / 2)
+		put_pixel(data->image, i, j, data->ceiling);
+	else if (j < WINDOW_HEIGHT - 1)
+		put_pixel(data->image, i, j, data->floor);
+}
+
+void	draw_buffer(t_data *data)
+{
+	int	i;
+	int	j;
+
+	j = -1;
+	while (++j < WINDOW_HEIGHT)
+	{
+		i = -1;
+		while (++i < WINDOW_WIDTH)
+			buffer_to_image(data, i, j);
+	}
+	mlx_put_image_to_window(data->init, data->window, data->image, 0, 0);
+	/*mlx_destroy_image(data->init, data->image); CHECK IF NECESSARY*/
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/14 16:31:54 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/15 13:18:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ void	init_data(t_data *data)
 	data->pos.y = data->map_start.y;
 	data->init = 0;
 	data->window = 0;
+	data->side = -1;
+	data->image.addr = mlx_get_data_addr(data->image.mlx_img, &data->image.bpp,
+			&data->image.line_len, &data->image.endian);
 	return ;
 }
 
