@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/15 13:35:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/18 10:45:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ typedef struct s_coord_d
 	double	y;
 }	t_coord_d;
 
-typedef struct s_img
+typedef struct s_img2
 {
 	void	*mlx_img;
-	char	*addr;
+	int		*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
-}			t_img;
+}			t_img2;
 
 /*For texture indexes: N = 0, S = 1, W = 2, E = 3*/
 typedef struct s_data
@@ -58,16 +58,16 @@ typedef struct s_data
 	int			map_y;
 	t_coord		map_start;
 	char		*nswe_paths[4];
-	void		**nswe_images;
+	int			**nswe_images;
 	int			floor;
 	int			ceiling;
 	int			count;
 	void		*init;
 	void		*window;
-	t_img		*image;
+	t_img2		image;
 	char		buffer[WINDOW_HEIGHT + 1][WINDOW_WIDTH + 1];
-	t_coord		direction;
-	t_coord		camera;
+	t_coord_d	direction;
+	t_coord_d	camera;
 	int			fov;
 	double		cam_x;
 	t_coord_d	ray_dir;
@@ -122,6 +122,21 @@ int		key_release(int key, t_data *data);
 int		close_window(t_data *data);
 int		open_images(t_data *data);
 int		mlx(t_data *data);
+
+/*dda.c*/
+void	set_coord(t_coord_d *coord, double x, double y);
+void	get_start_dir(t_data *data);
+void	fov(t_data *data);
+void	step_dist(t_data *data);
+void	pre_dda(t_data *data, int *i);
+void	stepper(t_data *data, int flag);
+void	dda(t_data *data);
+void	post_dda(t_data *data);
+void	calc_textures(t_data *data, int *i);
+void	put_pixel(t_img2 *img, int i, int j, int colour);
+void	buffer_to_image(t_data *data, int i, int j);
+void	draw_buffer(t_data *data);
+int		big_loop(t_data *data);
 
 /*clean.c*/
 int		ft_free(void *ptr);

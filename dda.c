@@ -6,13 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/15 13:48:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/18 11:04:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	set_coord(t_coord *coord, int x, int y)
+void	set_coord(t_coord_d *coord, double x, double y)
 {
 	coord->x = x;
 	coord->y = y;
@@ -46,6 +46,7 @@ void	get_start_dir(t_data *data)
 
 void	fov(t_data *data)
 {
+	/*IS THIS NECESSARY???*/
 	data->fov = 2 * atan(FOV_FACTOR / 1.0);
 	return ;
 }
@@ -74,26 +75,23 @@ void	step_dist(t_data *data)
 	}
 }
 
-int	pre_dda(t_data *data)
+void	pre_dda(t_data *data, int *i)
 {
-	int	i;
-
 	get_start_dir(data);
 	fov(data);
-	i = -1;
-	while (++i < WINDOW_WIDTH)
+	while (++(*i) < WINDOW_WIDTH)
 	{
-		data->cam_x = 2 * i / WINDOW_WIDTH - 1;
+		data->cam_x = 2 * *i / WINDOW_WIDTH - 1;
 		data->ray_dir.x = data->direction.x + (data->camera.x * data->cam_x);
 		data->ray_dir.y = data->direction.y + (data->camera.y * data->cam_x);
 		data->m_pos.x = (int)data->pos.x;
 		data->m_pos.y = (int)data->pos.y;
 		if (data->ray_dir.x != 0)
-			data->d_dist.x = abs(1 / data->ray_dir.x);
+			data->d_dist.x = fabs(1 / data->ray_dir.x);
 		else
 			data->d_dist.x = pow(10, 30);
 		if (data->ray_dir.y != 0)
-			data->d_dist.y = abs(1 / data->ray_dir.y);
+			data->d_dist.y = fabs(1 / data->ray_dir.y);
 		else
 			data->d_dist.y = pow(10, 30);
 		step_dist(data);
@@ -153,9 +151,9 @@ void	post_dda(t_data *data)
 		data->draw_end = WINDOW_HEIGHT - 1;
 }
 
-void	calc_textures(t_data *data)
+void	calc_textures(t_data *data, int *i)
 {
-	int		i;
+	int		j;
 	int		tex_num;
 	t_coord	tex;
 	double	wall_x;
@@ -163,6 +161,7 @@ void	calc_textures(t_data *data)
 	double	tex_pos;
 	int		colour;
 
+	/*HOW TO SELECT CORRECT TEXTURE INDEX????*/
 	tex_num = data->map[data->m_pos.y][data->m_pos.x] - 1;
 	if (!data->side)
 		wall_x = data->pos.y + data->perp_wall_dist * data->ray_dir.y;
@@ -176,8 +175,8 @@ void	calc_textures(t_data *data)
 		tex.x = TEXTURE_W_H - tex.x - 1;
 	step = 1.0 * TEXTURE_W_H / data->line_height;
 	tex_pos = (data->draw_start /*- pitch*/ + (data->line_height - WINDOW_HEIGHT) / 2) * step;
-	i = data->draw_start;
-	while (i < data->draw_end)
+	j = data->draw_start;
+	while (j < data->draw_end)
 	{
 		tex.y = (int)tex_pos & (TEXTURE_W_H - 1);
 		tex_pos += step;
@@ -186,11 +185,11 @@ void	calc_textures(t_data *data)
 		if (data->side)
 			colour = (colour >> 1) & 8355711; */
 		/*CHECK IF INDEXES ARE IN THE RIGHT PLACE!!!!!*/
-		data->buffer[i][pre_dda i] = colour;
+		data->buffer[j][*i] = colour;
 	}
 }
 
-void	put_pixel(t_img *img, int i, int j, int colour)
+void	put_pixel(t_img2 *img, int i, int j, int colour)
 {
 	int	pixel;
 
@@ -201,11 +200,11 @@ void	put_pixel(t_img *img, int i, int j, int colour)
 void	buffer_to_image(t_data *data, int i, int j)
 {
 	if (data->buffer[j][i] > 0)
-		put_pixel(data->image, i, j, data->buffer[j][i]);
+		put_pixel(&data->image, i, j, data->buffer[j][i]);
 	else if (j < WINDOW_HEIGHT / 2)
-		put_pixel(data->image, i, j, data->ceiling);
+		put_pixel(&data->image, i, j, data->ceiling);
 	else if (j < WINDOW_HEIGHT - 1)
-		put_pixel(data->image, i, j, data->floor);
+		put_pixel(&data->image, i, j, data->floor);
 }
 
 void	draw_buffer(t_data *data)
@@ -220,6 +219,23 @@ void	draw_buffer(t_data *data)
 		while (++i < WINDOW_WIDTH)
 			buffer_to_image(data, i, j);
 	}
-	mlx_put_image_to_window(data->init, data->window, data->image, 0, 0);
+	mlx_put_image_to_window(data->init, data->window, data->image.mlx_img, 0, 0);
 	/*mlx_destroy_image(data->init, data->image); CHECK IF NECESSARY*/
+}
+
+int	big_loop(t_data *data)
+{
+	/*SHOULD IT LOOP HERE OR SOMEWHERE ELSE???*/
+	int	i;
+
+	i = -1;
+	/* while ()
+	{ */
+	pre_dda(data, &i);
+	dda(data);
+	post_dda(data);
+	calc_textures(data, &i);
+	draw_buffer(data);
+	/* } */
+	return (0);
 }
