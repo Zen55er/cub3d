@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/18 10:45:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:46:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ typedef struct s_data
 	void		*init;
 	void		*window;
 	t_img2		image;
-	char		buffer[WINDOW_HEIGHT + 1][WINDOW_WIDTH + 1];
+	// int			buffer[WINDOW_HEIGHT][WINDOW_WIDTH];
+	int			**buffer;
 	t_coord_d	direction;
 	t_coord_d	camera;
 	int			fov;
@@ -85,7 +86,7 @@ typedef struct s_data
 
 /*main.c*/
 int		print_error(char *message);
-void	init_data(t_data *data);
+int		init_data(t_data *data);
 
 /*map.c*/
 int		check_forbidden(char *temp);
@@ -132,7 +133,7 @@ void	pre_dda(t_data *data, int *i);
 void	stepper(t_data *data, int flag);
 void	dda(t_data *data);
 void	post_dda(t_data *data);
-void	calc_textures(t_data *data, int *i);
+void	calc_textures(t_data *data, int i);
 void	put_pixel(t_img2 *img, int i, int j, int colour);
 void	buffer_to_image(t_data *data, int i, int j);
 void	draw_buffer(t_data *data);

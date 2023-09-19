@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/18 10:46:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:40:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,30 @@ int	print_error(char *message)
 }
 
 /*Initializes data members*/
-void	init_data(t_data *data)
+int	init_data(t_data *data)
 {
 	data->map = 0;
 	data->map_x = 0;
 	data->map_y = 0;
+	data->nswe_images = (int **)ft_calloc(sizeof(int *), 5);
+	if (!data->nswe_images)
+		return (print_error("failed texture allocation"));
 	data->nswe_paths[0] = 0;
 	data->nswe_paths[1] = 0;
 	data->nswe_paths[2] = 0;
 	data->nswe_paths[3] = 0;
-	data->nswe_images = 0;
 	data->floor = -1;
 	data->ceiling = -1;
 	data->count = 0;
 	data->map_start.x = 0;
 	data->map_start.y = 0;
-	data->pos.x = data->map_start.x;
-	data->pos.y = data->map_start.y;
 	data->init = 0;
 	data->window = 0;
 	data->side = -1;
-	data->image.mlx_img = mlx_new_image(data->init, WINDOW_WIDTH, WINDOW_HEIGHT);
-	data->image.addr = (int *)mlx_get_data_addr(data->image.mlx_img,
-			&data->image.bpp, &data->image.line_len, &data->image.endian);
-	return ;
+	data->buffer = (int **)ft_calloc(sizeof(int *), WINDOW_HEIGHT + 1);
+	for (int y = 0; y < WINDOW_HEIGHT; y++)
+		data->buffer[y] = (int *)ft_calloc(sizeof(int), WINDOW_WIDTH + 1);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -64,9 +64,12 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (print_error("Usage: ./cub3d path_to_map"));
-	init_data(&data);
+	if (init_data(&data))
+		return (free_all(&data));
 	if (map(&data, av[1]))
 		return (free_all(&data));
+	data.pos.x = (double)data.map_start.x + 0.5;
+	data.pos.y = (double)data.map_start.y + 0.5;
 	print_map(data.map);
 	mlx(&data);
 	free_all(&data);

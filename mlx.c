@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/18 10:54:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/19 10:36:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,21 @@ int	open_images(t_data *data)
 	int		size;
 	t_img2	temp;
 
-	size = 360;
+	size = TEXTURE_W_H;
 	i = -1;
-	data->nswe_images = (int **)malloc(sizeof(int *) * 5);
-	data->nswe_images[4] = 0;
 	while (++i < 4)
 	{
+		temp.bpp = 0;
+		temp.line_len = 0;
+		temp.endian = 0;
 		temp.mlx_img = mlx_xpm_file_to_image(data->init,
 				data->nswe_paths[i], &size, &size);
 		if (!temp.mlx_img)
-			return (1);
+			return (print_error("invalid xmp file"));
 		temp.addr = (int *)mlx_get_data_addr(temp.mlx_img, &temp.bpp,
 				&temp.line_len, &temp.endian);
+		data->nswe_images[i] = ft_calloc(1,
+				sizeof(int *) * TEXTURE_W_H * TEXTURE_W_H);
 		copy_pixels(data->nswe_images[i], temp);
 		mlx_destroy_image(data->init, temp.mlx_img);
 	}
@@ -95,12 +98,16 @@ int	mlx(t_data *data)
 	data->window = mlx_new_window(data->init, 1600, 900, "cub3D");
 	if (!data->window)
 		return (print_error("mlx window failed"));
+	data->image.mlx_img = mlx_new_image(data->init,
+			WINDOW_WIDTH, WINDOW_HEIGHT);
+	data->image.addr = (int *)mlx_get_data_addr(data->image.mlx_img,
+			&data->image.bpp, &data->image.line_len, &data->image.endian);
 	if (open_images(data))
-		return (print_error("invalid xmp file"));
-	mlx_loop_hook(data->init, no_event, data);
-	mlx_loop_hook(data->init, big_loop, data);
+		return (1);
+	// mlx_loop_hook(data->init, no_event, data);
 	mlx_hook(data->window, KeyPress, KeyPressMask, key_release, data);
 	mlx_hook(data->window, DestroyNotify, KeyPressMask, close_window, data);
+	mlx_loop_hook(data->init, big_loop, data);
 	mlx_loop(data->init);
 	return (0);
 }
