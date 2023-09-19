@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/19 11:48:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/19 12:50:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	pre_dda(t_data *data, int *i)
 	fov(data);
 	while (++(*i) < WINDOW_WIDTH)
 	{
-		data->cam_x = 2 * *i / WINDOW_WIDTH - 1;
+		data->cam_x = 2 * *i / (double)WINDOW_WIDTH - 1;
 		data->ray_dir.x = data->direction.x + (data->camera.x * data->cam_x);
 		data->ray_dir.y = data->direction.y + (data->camera.y * data->cam_x);
 		data->m_pos.x = (int)data->pos.x;
@@ -150,7 +150,7 @@ void	post_dda(t_data *data)
 	if (data->draw_start < 0)
 		data->draw_start = 0;
 	data->draw_end = (WINDOW_HEIGHT + data->line_height) / 2 /* + pitch */;
-	if (data->draw_end < 0)
+	if (data->draw_end >= WINDOW_HEIGHT)
 		data->draw_end = WINDOW_HEIGHT - 1;
 }
 
@@ -158,14 +158,14 @@ int	choose_texture(t_data *data)
 {
 	if (data->side)
 	{
-		if ((double)data->m_pos.y - data->pos.y)
+		if ((double)data->m_pos.y - data->pos.y > 0)
 			return (0);
 		else
 			return (1);
 	}
 	else
 	{
-		if ((double)data->m_pos.x - data->pos.x)
+		if ((double)data->m_pos.x - data->pos.x > 0)
 			return (2);
 		else
 			return (3);
@@ -223,7 +223,7 @@ void	put_pixel(t_img2 *img, int i, int j, int colour)
 
 void	buffer_to_image(t_data *data, int i, int j)
 {
-	printf("TEST: j: %i, i: %i, colour: %i\n", j, i, data->buffer[j][i]);
+	// printf("TEST: j: %i, i: %i, colour: %i\n", j, i, data->buffer[j][i]);
 	if (data->buffer[j][i] > 0)
 		put_pixel(&data->image, i, j, data->buffer[j][i]);
 	else if (j < WINDOW_HEIGHT / 2)
