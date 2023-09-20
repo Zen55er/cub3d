@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 11:30:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 11:56:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 # define WINDOW_WIDTH 1600
 # define WINDOW_HEIGHT 900
-# define TEXTURE_W_H 360
+# define TEXTURE_W_H 64
 # define FOV_FACTOR 0.66
 
 typedef struct s_coord
@@ -66,11 +66,9 @@ typedef struct s_data
 	void		*init;
 	void		*window;
 	t_img2		image;
-	// int			buffer[WINDOW_HEIGHT][WINDOW_WIDTH];
 	int			**buffer;
 	t_coord_d	direction;
 	t_coord_d	camera;
-	int			fov;
 	double		cam_x;
 	t_coord_d	ray_dir;
 	t_coord_d	pos;
@@ -128,7 +126,6 @@ int		mlx(t_data *data);
 /*dda.c*/
 void	set_coord(t_coord_d *coord, double x, double y);
 void	get_start_dir(t_data *data);
-void	fov(t_data *data);
 void	step_dist(t_data *data);
 void	pre_dda(t_data *data, int *i);
 void	stepper(t_data *data, int flag);

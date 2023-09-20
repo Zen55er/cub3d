@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 11:31:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 12:00:51 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,6 @@ void	get_start_dir(t_data *data)
 	return ;
 }
 
-void	fov(t_data *data)
-{
-	/*IS THIS NECESSARY???*/
-	data->fov = 2 * atan(FOV_FACTOR / 1.0);
-	return ;
-}
-
 void	step_dist(t_data *data)
 {
 	if (data->ray_dir.x < 0)
@@ -78,7 +71,6 @@ void	step_dist(t_data *data)
 void	pre_dda(t_data *data, int *i)
 {
 	get_start_dir(data);
-	fov(data);
 	while (++(*i) < WINDOW_WIDTH)
 	{
 		data->cam_x = 2 * *i / (double)WINDOW_WIDTH - 1;
@@ -143,13 +135,11 @@ void	dda(t_data *data)
 
 void	post_dda(t_data *data)
 {
-	// int	pitch; TEST IF OFFSET
-
 	data->line_height = (int)(WINDOW_HEIGHT / data->perp_wall_dist);
-	data->draw_start = (WINDOW_HEIGHT - data->line_height) / 2 /* + pitch */;
+	data->draw_start = (WINDOW_HEIGHT - data->line_height) / 2;
 	if (data->draw_start < 0)
 		data->draw_start = 0;
-	data->draw_end = (WINDOW_HEIGHT + data->line_height) / 2 /* + pitch */;
+	data->draw_end = (WINDOW_HEIGHT + data->line_height) / 2;
 	if (data->draw_end >= WINDOW_HEIGHT)
 		data->draw_end = WINDOW_HEIGHT - 1;
 }
@@ -182,7 +172,6 @@ void	calc_textures(t_data *data, int i)
 	double	tex_pos;
 	int		colour;
 
-	// tex_num = data->map[data->m_pos.y][data->m_pos.x] - 1;
 	tex_num = choose_texture(data);
 	if (!data->side)
 		wall_x = data->pos.y + data->perp_wall_dist * data->ray_dir.y;
@@ -207,11 +196,8 @@ void	calc_textures(t_data *data, int i)
 		/* Making colour darker. Decide if it stays;
 		if (data->side)
 			colour = (colour >> 1) & 8355711; */
-		/*CHECK IF INDEXES ARE IN THE RIGHT PLACE!!!!!*/
-		// printf("TEST: j: %i, i: %i, colour: %i\n", j, *i, colour);
 		if (colour > 0)
 			data->buffer[j][i] = colour;
-		// printf("TEST: j: %i, i: %i, BUFFER colour: %i\n", j, *i, data->buffer[j][*i]);
 		j++;
 	}
 }
@@ -226,7 +212,6 @@ void	put_pixel(t_img2 *img, int i, int j, int colour)
 
 void	buffer_to_image(t_data *data, int i, int j)
 {
-	// printf("TEST: j: %i, i: %i, colour: %i\n", j, i, data->buffer[j][i]);
 	if (data->buffer[j][i] > 0)
 		put_pixel(&data->image, i, j, data->buffer[j][i]);
 	else if (j < WINDOW_HEIGHT / 2)
@@ -258,9 +243,6 @@ int	big_loop(t_data *data)
 
 	i = -1;
 	pre_dda(data, &i);
-	// dda(data);
-	// post_dda(data);
-	// calc_textures(data, i);
 	draw_buffer(data);
 	return (0);
 }
