@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 12:00:51 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 13:18:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,15 @@ void	step_dist(t_data *data)
 	}
 }
 
-void	pre_dda(t_data *data, int *i)
+void	pre_dda(t_data *data)
 {
+	int	i;
+
+	i = -1;
 	get_start_dir(data);
-	while (++(*i) < WINDOW_WIDTH)
+	while (++i < WINDOW_WIDTH)
 	{
-		data->cam_x = 2 * *i / (double)WINDOW_WIDTH - 1;
+		data->cam_x = 2 * i / (double)WINDOW_WIDTH - 1;
 		data->ray_dir.x = data->direction.x + (data->camera.x * data->cam_x);
 		data->ray_dir.y = data->direction.y + (data->camera.y * data->cam_x);
 		data->m_pos.x = (int)data->pos.x;
@@ -89,7 +92,7 @@ void	pre_dda(t_data *data, int *i)
 		step_dist(data);
 		dda(data);
 		post_dda(data);
-		calc_textures(data, *i);
+		calc_textures(data, i);
 	}
 }
 
@@ -198,6 +201,8 @@ void	calc_textures(t_data *data, int i)
 			colour = (colour >> 1) & 8355711; */
 		if (colour > 0)
 			data->buffer[j][i] = colour;
+		else
+			data->buffer[j][i] = colour + 1;
 		j++;
 	}
 }
@@ -233,16 +238,13 @@ void	draw_buffer(t_data *data)
 			buffer_to_image(data, i, j);
 	}
 	mlx_put_image_to_window(data->init, data->window, data->image.mlx_img, 0, 0);
-	/*mlx_destroy_image(data->init, data->image); CHECK IF NECESSARY*/
+	// mlx_destroy_image(data->init, data->image.mlx_img);
 }
 
 int	big_loop(t_data *data)
 {
 	/*SHOULD IT LOOP HERE OR SOMEWHERE ELSE???*/
-	int	i;
-
-	i = -1;
-	pre_dda(data, &i);
+	pre_dda(data);
 	draw_buffer(data);
 	return (0);
 }

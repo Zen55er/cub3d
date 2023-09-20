@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 11:56:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 13:20:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int		mlx(t_data *data);
 void	set_coord(t_coord_d *coord, double x, double y);
 void	get_start_dir(t_data *data);
 void	step_dist(t_data *data);
-void	pre_dda(t_data *data, int *i);
+void	pre_dda(t_data *data);
 void	stepper(t_data *data, int flag);
 void	dda(t_data *data);
 void	post_dda(t_data *data);

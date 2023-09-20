@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 11:54:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 12:34:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int	mlx(t_data *data)
 		return (1);
 	mlx_hook(data->window, KeyPress, KeyPressMask, key_release, data);
 	mlx_hook(data->window, DestroyNotify, KeyPressMask, close_window, data);
-	// mlx_loop_hook(data->init, big_loop, data);
-	big_loop(data);
+	mlx_loop_hook(data->init, big_loop, data);
+	// big_loop(data);
 	mlx_loop(data->init);
 	return (0);
 }
