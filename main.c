@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 10:31:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:27:44 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ int	main(int ac, char **av)
 	data.pos.y = (double)data.map_start.y + 0.5;
 	print_map(data.map);
 	mlx(&data);
+	mlx_destroy_image(data.init, data.image.mlx_img);
+	mlx_destroy_window(data.init, data.window);
 	free_all(&data);
 }

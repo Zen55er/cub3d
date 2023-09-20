@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 13:20:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 13:41:55 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define WINDOW_HEIGHT 900
 # define TEXTURE_W_H 64
 # define FOV_FACTOR 0.66
+# define P_SPEED 0.3
 
 typedef struct s_coord
 {
@@ -136,6 +137,11 @@ void	put_pixel(t_img2 *img, int i, int j, int colour);
 void	buffer_to_image(t_data *data, int i, int j);
 void	draw_buffer(t_data *data);
 int		big_loop(t_data *data);
+
+/* movements.c */
+int		move_vert(t_data *data, int flag);
+int		move_horz(t_data *data, int flag);
+int		rotate(t_data *data, int flag);
 
 /*clean.c*/
 int		ft_free(void *ptr);

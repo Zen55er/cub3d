@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 11:00:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 10:39:17 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:20:41 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	free_double(char **array)
 }
 
 /*Frees created display and mlx_init*/
-void	free_window(t_data *data)
+/* void	free_window(t_data *data)
 {
 	mlx_destroy_display(data->init);
 	free(data->init);
 	return ;
-}
+} */
 
 /*Checks each allocated variable and calls necessary function to free it*/
 int	free_all(t_data *data)
@@ -59,6 +59,9 @@ int	free_all(t_data *data)
 			mlx_destroy_image(data->init, data->nswe_images[i].mlx_img);
 	}
 	if (data->window)
-		free_window(data);
+	{
+		mlx_destroy_display(data->init);
+		free(data->init);
+	}
 	return (1);
 }
