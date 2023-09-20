@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 11:00:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/06 09:25:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 08:51:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	free_all(t_data *data)
 	i = -1;
 	if (data->map)
 		free_double(data->map);
+	if (data->buffer)
+		free_double((char **)data->buffer);
 	while (++i < 4)
 	{
 		if (data->nswe_paths[i])

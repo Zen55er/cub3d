@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:13:35 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/05 13:32:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 09:01:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ int	holes(t_data *data, int i, int j)
 	while (l > 0 && data->map[j][--l] && path(data->map[j][l]))
 		continue ;
 	m = j;
-	while (m > 0 && data->map[++m][i] && path(data->map[j][k]))
+	while (m > 0 && m < data->map_y - 1
+		&& data->map[++m][i] && path(data->map[m][i]))
 		continue ;
 	n = j;
-	while (n > 0 && data->map[--n][i] && path(data->map[j][k]))
+	while (n > 0 && data->map[--n][i] && path(data->map[n][i]))
 		continue ;
 	if (!data->map[j][k] || data->map[j][k] == ' '
 		|| !data->map[j][l] || data->map[j][l] == ' '
+		|| (m == data->map_y - 1 && data->map[m][i] == '0')
 		|| !data->map[m][i] || data->map[m][i] == ' '
 		|| !data->map[n][i] || data->map[n][i] == ' ')
 		return (1);
@@ -62,7 +64,7 @@ int	edge_check(t_data *data)
 		while (data->map[j][++i])
 			if (data->map[j][i] == '0')
 				if (j == 0 || j == data->map_y - 1 || i == 0
-					|| holes(data, i, j))
+					|| i == data->map_x - 1 || holes(data, i, j))
 					return (print_error("Map is not surrounded by 1's"));
 	}
 	if (!data->map_start.x || data->map_start.x == data->map_x - 1
