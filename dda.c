@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 13:18:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 14:02:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,12 +238,27 @@ void	draw_buffer(t_data *data)
 			buffer_to_image(data, i, j);
 	}
 	mlx_put_image_to_window(data->init, data->window, data->image.mlx_img, 0, 0);
-	// mlx_destroy_image(data->init, data->image.mlx_img);
+	mlx_destroy_image(data->init, data->image.mlx_img);
+}
+
+int	init_image(t_data *data)
+{
+	data->image.mlx_img = mlx_new_image(data->init,
+			WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!data->image.mlx_img)
+		return (1);
+	data->image.addr = (int *)mlx_get_data_addr(data->image.mlx_img,
+			&data->image.bpp, &data->image.line_len, &data->image.endian);
+	if (!data->image.addr)
+		return (1);
+	return (0);
 }
 
 int	big_loop(t_data *data)
 {
 	/*SHOULD IT LOOP HERE OR SOMEWHERE ELSE???*/
+	if (init_image(data))
+		return (print_error("could not prepare image"));
 	pre_dda(data);
 	draw_buffer(data);
 	return (0);

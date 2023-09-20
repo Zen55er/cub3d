@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 12:34:05 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:03:08 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,6 @@ int	mlx(t_data *data)
 	data->window = mlx_new_window(data->init, 1600, 900, "cub3D");
 	if (!data->window)
 		return (print_error("mlx window failed"));
-	data->image.mlx_img = mlx_new_image(data->init,
-			WINDOW_WIDTH, WINDOW_HEIGHT);
-	data->image.addr = (int *)mlx_get_data_addr(data->image.mlx_img,
-			&data->image.bpp, &data->image.line_len, &data->image.endian);
 	if (open_images(data))
 		return (1);
 	mlx_hook(data->window, KeyPress, KeyPressMask, key_release, data);

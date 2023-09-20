@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 10:31:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 13:48:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	init_data(t_data *data)
 	data->init = 0;
 	data->window = 0;
 	data->side = -1;
+	data->image.mlx_img = 0;
+	data->image.addr = 0;
 	data->buffer = (int **)ft_calloc(sizeof(int *), WINDOW_HEIGHT + 1);
 	for (int y = 0; y < WINDOW_HEIGHT; y++)
 		data->buffer[y] = (int *)ft_calloc(sizeof(int), WINDOW_WIDTH + 1);
