@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 08:51:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 11:30:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <errno.h>
 # include <math.h>
 # include <X11/keysym.h>
+# include <limits.h>
 # include "libft/libft.h"
 # include "minilibx-linux/mlx_int.h"
 # include "minilibx-linux/mlx.h"
@@ -58,7 +59,7 @@ typedef struct s_data
 	int			map_y;
 	t_coord		map_start;
 	char		*nswe_paths[4];
-	int			**nswe_images;
+	t_img2		nswe_images[4];
 	int			floor;
 	int			ceiling;
 	int			count;

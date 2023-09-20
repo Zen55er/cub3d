@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/19 12:50:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 11:31:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,24 +190,27 @@ void	calc_textures(t_data *data, int i)
 		wall_x = data->pos.x + data->perp_wall_dist * data->ray_dir.x;
 	wall_x -= floor(wall_x);
 	tex.x = (int)(wall_x * (double)TEXTURE_W_H);
-	if (!data->side && data->ray_dir.x > 0)
-		tex.x = TEXTURE_W_H - tex.x - 1;
-	else if (data->side && data->ray_dir.y < 0)
+	if ((!data->side && data->ray_dir.x < 0)
+		|| (data->side && data->ray_dir.y > 0))
 		tex.x = TEXTURE_W_H - tex.x - 1;
 	step = 1.0 * TEXTURE_W_H / data->line_height;
-	tex_pos = (data->draw_start /*- pitch*/ + (data->line_height - WINDOW_HEIGHT) / 2) * step;
+	tex_pos = (data->draw_start + (data->line_height - WINDOW_HEIGHT) / 2) * step;
 	j = data->draw_start;
 	while (j < data->draw_end)
 	{
-		tex.y = (int)tex_pos & (TEXTURE_W_H - 1);
+		if (tex_pos > (double)INT_MAX)
+			tex.y = INT_MAX;
+		else
+			tex.y = (int)tex_pos /* & (TEXTURE_W_H - 1) */;
 		tex_pos += step;
-		colour = data->nswe_images[tex_num][TEXTURE_W_H * tex.y + tex.x];
+		colour = data->nswe_images[tex_num].addr[TEXTURE_W_H * tex.y + tex.x];
 		/* Making colour darker. Decide if it stays;
 		if (data->side)
 			colour = (colour >> 1) & 8355711; */
 		/*CHECK IF INDEXES ARE IN THE RIGHT PLACE!!!!!*/
 		// printf("TEST: j: %i, i: %i, colour: %i\n", j, *i, colour);
-		data->buffer[j][i] = colour;
+		if (colour > 0)
+			data->buffer[j][i] = colour;
 		// printf("TEST: j: %i, i: %i, BUFFER colour: %i\n", j, *i, data->buffer[j][*i]);
 		j++;
 	}

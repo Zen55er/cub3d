@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 08:47:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/20 10:31:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ int	init_data(t_data *data)
 	data->map = 0;
 	data->map_x = 0;
 	data->map_y = 0;
-	data->nswe_images = (int **)ft_calloc(sizeof(int *), 5);
-	if (!data->nswe_images)
-		return (print_error("failed texture allocation"));
 	data->nswe_paths[0] = 0;
 	data->nswe_paths[1] = 0;
 	data->nswe_paths[2] = 0;
@@ -71,6 +68,6 @@ int	main(int ac, char **av)
 	data.pos.x = (double)data.map_start.x + 0.5;
 	data.pos.y = (double)data.map_start.y + 0.5;
 	print_map(data.map);
-	// mlx(&data);
+	mlx(&data);
 	free_all(&data);
 }
