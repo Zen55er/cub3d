@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 15:03:08 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:03:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	no_event(t_data *data)
 /*Frees window*/
 int	close_window(t_data *data)
 {
-	mlx_destroy_window(data->init, data->window);
+	mlx_loop_end(data->init);
 	return (0);
 }
 
@@ -32,17 +32,17 @@ int	key_release(int key, t_data *data)
 	if (key == XK_Escape)
 		close_window(data);
 	else if (key == XK_w)
-		printf("W\n");
+		move_vert(data, 1);
 	else if (key == XK_s)
-		printf("S\n");
+		move_vert(data, 0);
 	else if (key == XK_a)
-		printf("A\n");
+		move_horz(data, 0);
 	else if (key == XK_d)
-		printf("D\n");
+		move_horz(data, 1);
 	else if (key == XK_Left)
-		printf("LEFT\n");
+		rotate(data, 0);
 	else if (key == XK_Right)
-		printf("RIGHT\n");
+		rotate(data, 1);
 	return (0);
 }
 
@@ -83,7 +83,6 @@ int	mlx(t_data *data)
 	mlx_hook(data->window, KeyPress, KeyPressMask, key_release, data);
 	mlx_hook(data->window, DestroyNotify, KeyPressMask, close_window, data);
 	mlx_loop_hook(data->init, big_loop, data);
-	// big_loop(data);
 	mlx_loop(data->init);
 	return (0);
 }

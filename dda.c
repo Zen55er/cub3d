@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 14:02:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:02:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ void	set_coord(t_coord_d *coord, double x, double y)
 
 void	get_start_dir(t_data *data)
 {
-	if (data->map[data->map_start.y][data->map_start.x] == 'N')
+	if (data->map[(int)data->pos.y][(int)data->pos.x] == 'N')
 	{
 		set_coord(&data->direction, 0, -1);
 		set_coord(&data->camera, FOV_FACTOR, 0);
 	}
-	else if (data->map[data->map_start.y][data->map_start.x] == 'S')
+	else if (data->map[(int)data->pos.y][(int)data->pos.x] == 'S')
 	{
 		set_coord(&data->direction, 0, 1);
 		set_coord(&data->camera, -FOV_FACTOR, 0);
 	}
-	else if (data->map[data->map_start.y][data->map_start.x] == 'W')
+	else if (data->map[(int)data->pos.y][(int)data->pos.x] == 'W')
 	{
 		set_coord(&data->direction, -1, 0);
 		set_coord(&data->camera, 0, -FOV_FACTOR);
@@ -238,20 +238,6 @@ void	draw_buffer(t_data *data)
 			buffer_to_image(data, i, j);
 	}
 	mlx_put_image_to_window(data->init, data->window, data->image.mlx_img, 0, 0);
-	mlx_destroy_image(data->init, data->image.mlx_img);
-}
-
-int	init_image(t_data *data)
-{
-	data->image.mlx_img = mlx_new_image(data->init,
-			WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (!data->image.mlx_img)
-		return (1);
-	data->image.addr = (int *)mlx_get_data_addr(data->image.mlx_img,
-			&data->image.bpp, &data->image.line_len, &data->image.endian);
-	if (!data->image.addr)
-		return (1);
-	return (0);
 }
 
 int	big_loop(t_data *data)

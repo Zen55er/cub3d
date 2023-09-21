@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 11:00:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/20 15:11:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:03:08 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ int	free_all(t_data *data)
 			mlx_destroy_image(data->init, data->nswe_images[i].mlx_img);
 	}
 	if (data->window)
+	{
+		mlx_destroy_display(data->init);
 		free(data->init);
+	}
 	return (1);
 }
