@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/21 10:03:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:55:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	open_images(t_data *data)
 	while (++i < 4)
 	{
 		data->nswe_images[i].mlx_img = mlx_xpm_file_to_image(data->init,
-			data->nswe_paths[i], &size, &size);
+				data->nswe_paths[i], &size, &size);
 		if (!data->nswe_images[i].mlx_img)
 			return (print_error("failed image allocation"));
-		data->nswe_images[i].addr =
+		data->nswe_images[i].addr = \
 			(int *)mlx_get_data_addr(data->nswe_images[i].mlx_img,
 				&data->nswe_images[i].bpp, &data->nswe_images[i].line_len,
 				&data->nswe_images[i].endian);
