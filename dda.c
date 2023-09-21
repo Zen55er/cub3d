@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/21 10:02:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:44:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	pre_dda(t_data *data)
 	int	i;
 
 	i = -1;
-	get_start_dir(data);
 	while (++i < WINDOW_WIDTH)
 	{
 		data->cam_x = 2 * i / (double)WINDOW_WIDTH - 1;
@@ -242,10 +241,9 @@ void	draw_buffer(t_data *data)
 
 int	big_loop(t_data *data)
 {
-	/*SHOULD IT LOOP HERE OR SOMEWHERE ELSE???*/
-	if (init_image(data))
-		return (print_error("could not prepare image"));
 	pre_dda(data);
 	draw_buffer(data);
+	data->m_pos.x = (int)data->pos.x;
+	data->m_pos.y = (int)data->pos.y;
 	return (0);
 }

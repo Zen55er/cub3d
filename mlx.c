@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/21 10:55:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:28:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,35 @@ int	close_window(t_data *data)
 /*Begins movement and turning logic*/
 int	key_release(int key, t_data *data)
 {
+	printf("BEFORE MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
 	if (key == XK_Escape)
 		close_window(data);
 	else if (key == XK_w)
 		move_vert(data, 1);
 	else if (key == XK_s)
-		move_vert(data, 0);
+		move_vert(data, -1);
 	else if (key == XK_a)
-		move_horz(data, 0);
+		move_horz(data, -1);
 	else if (key == XK_d)
 		move_horz(data, 1);
 	else if (key == XK_Left)
-		rotate(data, 0);
+		rotate(data, -1);
 	else if (key == XK_Right)
 		rotate(data, 1);
+	printf("AFTER MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
+	return (0);
+}
+
+int	init_image(t_data *data)
+{
+	data->image.mlx_img = mlx_new_image(data->init,
+			WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!data->image.mlx_img)
+		return (1);
+	data->image.addr = (int *)mlx_get_data_addr(data->image.mlx_img,
+			&data->image.bpp, &data->image.line_len, &data->image.endian);
+	if (!data->image.addr)
+		return (1);
 	return (0);
 }
 
@@ -66,6 +81,7 @@ int	open_images(t_data *data)
 		if (!data->nswe_images[i].addr)
 			return (print_error("failed image allocation"));
 	}
+	init_image(data);
 	return (0);
 }
 
@@ -80,6 +96,7 @@ int	mlx(t_data *data)
 		return (print_error("mlx window failed"));
 	if (open_images(data))
 		return (1);
+	get_start_dir(data);
 	mlx_hook(data->window, KeyPress, KeyPressMask, key_release, data);
 	mlx_hook(data->window, DestroyNotify, KeyPressMask, close_window, data);
 	mlx_loop_hook(data->init, big_loop, data);
