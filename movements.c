@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/21 14:51:05 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 08:32:41 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	move_vert(t_data *data, int flag)
 		printf("moving forward\n");
 	else
 		printf("moving backward\n");
-	if (new.x > 0 && new.x < data->map_x - 2 && data->map[(int)data->pos.y][new.x] != 1)
+	if (new.x > 0 && new.x < data->map_x && data->map[(int)data->pos.y][new.x] != '1')
 		data->pos.x += (double)(data->direction.x * P_SPEED * flag);
-	if (new.y > 0 && new.y < data->map_y - 2 && data->map[new.y][(int)data->pos.x] != 1)
+	if (new.y > 0 && new.y < data->map_y && data->map[new.y][(int)data->pos.x] != '1')
 		data->pos.y += (double)(data->direction.y * P_SPEED * flag);
 	data->m_pos.x = data->pos.x;
 	data->m_pos.y = data->pos.y;
@@ -62,12 +62,18 @@ int	move_horz(t_data *data, int flag)
 		printf("moving right\n");
 	else
 		printf("moving left\n");
-	if (new.x > 0 && new.x < data->map_x - 2 && data->map[(int)data->pos.y][new.x] != 1)
+	if (new.x > 0 && new.x < data->map_x && data->map[(int)data->pos.y][new.x] != '1')
+	{
 		data->pos.x += (double)(data->camera.x * P_SPEED * flag);
-	if (new.y > 0 && new.y < data->map_y - 2 && data->map[new.y][(int)data->pos.x] != 1)
+		data->m_pos.x = data->pos.x;
+		data->m_pos.y = data->pos.y;
+	}
+	if (new.y > 0 && new.y < data->map_y && data->map[new.y][(int)data->pos.x] != '1')
+	{
 		data->pos.y += (double)(data->camera.y * P_SPEED * flag);
-	data->m_pos.x = data->pos.x;
-	data->m_pos.y = data->pos.y;
+		data->m_pos.x = data->pos.x;
+		data->m_pos.y = data->pos.y;
+	}
 	return (0);
 }
 
