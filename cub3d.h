@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 15:01:08 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:52:30 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,9 @@ void	put_pixel(t_img2 *img, int i, int j, int colour);
 void	buffer_to_image(t_data *data, int i, int j);
 void	draw_buffer(t_data *data);
 int		big_loop(t_data *data);
+
+/* mini_map.c */
+int		mini_map(t_data *data, int i, int j);
 
 /* movements.c */
 int		move(t_data *data, int flag, int dir);

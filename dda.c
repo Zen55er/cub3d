@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 09:01:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:19:22 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,10 @@ void	put_pixel(t_img2 *img, int i, int j, int colour)
 
 void	buffer_to_image(t_data *data, int i, int j)
 {
-	if (data->buffer[j][i] > 0)
+	if ((j > (WINDOW_HEIGHT - (data->map_y * 8)) && j < WINDOW_HEIGHT) && i > -1
+		&& (i < (data->map_x * 8)))
+		mini_map(data, i, j);
+	else if (data->buffer[j][i] > 0)
 		put_pixel(&data->image, i, j, data->buffer[j][i]);
 	else if (j < WINDOW_HEIGHT / 2)
 		put_pixel(&data->image, i, j, data->ceiling);
