@@ -6,72 +6,60 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/22 08:32:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 12:11:20 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/* int	move_vert(t_data *data, int flag)
+/*flag 0 -> operation in x coordinate
+flag 1 -> operation in y coordinate
+If the new position's x/y coordinate is in a square adjacent to a wall,
+check if the distance from the new position is not lower than BUBBLE
+(the minimum allowed distance the player can be to a wall).
+This avoids cases where the move makes the player land at the edge of a wall,
+which messes up the dda calculations.
+*/
+int	personal_space(t_data *data, double new, double pos, int flag)
 {
-	double	y;
-
-	y = data->pos.y;
-	if (flag)
-	{
-		y -= P_SPEED;
-		if (!(data->map[(int)y][(int)data->pos.x] == '1'))
-			data->pos.y = y;
-		printf("y: %f\n", y);
-	}
-	else
-	{
-		y += P_SPEED;
-		if (!(data->map[(int)y][(int)data->pos.x] == '1'))
-			data->pos.y = y;
-		printf("y: %f\n", y);
-	}
-	return (0);
-} */
-int	move_vert(t_data *data, int flag)
-{
-	t_coord	new;
-
-	new.x = (int)(data->pos.x + data->direction.x * P_SPEED * flag);
-	new.y = (int)(data->pos.y + data->direction.y * P_SPEED * flag);
-	if (flag == 1)
-		printf("moving forward\n");
-	else
-		printf("moving backward\n");
-	if (new.x > 0 && new.x < data->map_x && data->map[(int)data->pos.y][new.x] != '1')
-		data->pos.x += (double)(data->direction.x * P_SPEED * flag);
-	if (new.y > 0 && new.y < data->map_y && data->map[new.y][(int)data->pos.x] != '1')
-		data->pos.y += (double)(data->direction.y * P_SPEED * flag);
-	data->m_pos.x = data->pos.x;
-	data->m_pos.y = data->pos.y;
+	if ((!flag
+		&& ((new > pos && data->map[data->m_pos.y][data->m_pos.x + 1] == '1'
+		&& (double)(data->m_pos.x + 1) - new < BUBBLE)
+		|| (new < pos && data->map[data->m_pos.y][data->m_pos.x - 1] == '1'
+		&& new - (double)(data->m_pos.x) < BUBBLE)))
+		|| (flag
+		&& ((new > pos && data->map[data->m_pos.y + 1][data->m_pos.x] == '1'
+		&& (double)(data->m_pos.y + 1) - new < BUBBLE)
+		|| (new < pos && data->map[data->m_pos.y - 1][data->m_pos.x] == '1'
+		&& new - (double)(data->m_pos.y) < BUBBLE))))
+		return (1);
 	return (0);
 }
 
-int	move_horz(t_data *data, int flag)
+int	move(t_data *data, int flag, int dir)
 {
-	t_coord	new;
+	t_coord_d	new;
 
-	new.x = (int)(data->pos.x + data->camera.x * P_SPEED * flag);
-	new.y = (int)(data->pos.y + data->camera.y * P_SPEED * flag);
-	if (flag == 1)
-		printf("moving right\n");
-	else
-		printf("moving left\n");
-	if (new.x > 0 && new.x < data->map_x && data->map[(int)data->pos.y][new.x] != '1')
+	if (dir)
 	{
-		data->pos.x += (double)(data->camera.x * P_SPEED * flag);
-		data->m_pos.x = data->pos.x;
-		data->m_pos.y = data->pos.y;
+		new.x = (data->pos.x + data->direction.x * P_SPEED * flag);
+		new.y = (data->pos.y + data->direction.y * P_SPEED * flag);
 	}
-	if (new.y > 0 && new.y < data->map_y && data->map[new.y][(int)data->pos.x] != '1')
+	else
 	{
-		data->pos.y += (double)(data->camera.y * P_SPEED * flag);
+		new.x = (data->pos.x + data->camera.x * P_SPEED * flag);
+		new.y = (data->pos.y + data->camera.y * P_SPEED * flag);		
+	}
+	if (data->map[(int)data->pos.y][(int)new.x] != '1'
+		&& !personal_space(data, new.x, data->pos.x, 0))
+	{
+		data->pos.x = new.x;
 		data->m_pos.x = data->pos.x;
+	}
+	if (data->map[(int)new.y][(int)data->pos.x] != '1'
+		&& !personal_space(data, new.y, data->pos.y, 1))
+	{
+		data->pos.y = new.y;
 		data->m_pos.y = data->pos.y;
 	}
 	return (0);

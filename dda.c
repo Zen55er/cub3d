@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/21 13:44:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 09:01:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,10 +239,26 @@ void	draw_buffer(t_data *data)
 	mlx_put_image_to_window(data->init, data->window, data->image.mlx_img, 0, 0);
 }
 
+void	clear_buffer(t_data *data)
+{
+	int	i;
+	int	j;
+
+	j = -1;
+	while (++j < WINDOW_HEIGHT)
+	{
+		i = -1;
+		while (++i < WINDOW_WIDTH)
+			data->buffer[j][i] = 0;
+	}
+	return ;
+}
+
 int	big_loop(t_data *data)
 {
 	pre_dda(data);
 	draw_buffer(data);
+	clear_buffer(data);
 	data->m_pos.x = (int)data->pos.x;
 	data->m_pos.y = (int)data->pos.y;
 	return (0);

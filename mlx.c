@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 08:31:04 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 12:10:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,22 @@ int	close_window(t_data *data)
 /*Begins movement and turning logic*/
 int	key_release(int key, t_data *data)
 {
-	printf("BEFORE MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
+	// printf("BEFORE MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
 	if (key == XK_Escape)
 		close_window(data);
 	else if (key == XK_w)
-		move_vert(data, 1);
+		move(data, 1, 1);
 	else if (key == XK_s)
-		move_vert(data, -1);
+		move(data, -1, 1);
 	else if (key == XK_a)
-		move_horz(data, -1);
+		move(data, -1, 0);
 	else if (key == XK_d)
-		move_horz(data, 1);
+		move(data, 1, 0);
 	else if (key == XK_Left)
 		rotate(data, -1);
 	else if (key == XK_Right)
 		rotate(data, 1);
-	printf("AFTER MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
+	// printf("AFTER MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
 	return (0);
 }
 

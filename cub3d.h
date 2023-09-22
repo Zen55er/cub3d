@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 08:29:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 12:11:35 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define TEXTURE_W_H 64
 # define FOV_FACTOR 0.66
 # define P_SPEED 0.3
+# define BUBBLE 0.1
 
 typedef struct s_coord
 {
@@ -139,8 +140,7 @@ void	draw_buffer(t_data *data);
 int		big_loop(t_data *data);
 
 /* movements.c */
-int		move_vert(t_data *data, int flag);
-int		move_horz(t_data *data, int flag);
+int		move(t_data *data, int flag, int dir);
 int		rotate(t_data *data, int flag);
 
 /*clean.c*/
