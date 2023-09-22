@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/22 12:11:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:56:20 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,23 @@ int	move(t_data *data, int flag, int dir)
 
 int	rotate(t_data *data, int flag)
 {
-	(void)data;
-	if (flag == 1)
-	{
-		printf("turning right\n");
-	}
+	double	old_dir;
+	double	old_cam;
+	double	rot_speed;
+
+	if (flag)
+		rot_speed = ROTATION;
 	else
-	{
-		printf("turning left\n");
-	}
+		rot_speed = -ROTATION;
+	old_dir = data->direction.x;
+	data->direction.x = data->direction.x * cos(rot_speed) \
+		- data->direction.y * sin(rot_speed);
+	data->direction.y = old_dir * sin(rot_speed) \
+		+ data->direction.y * cos(rot_speed);
+	old_cam = data->camera.x;
+	data->camera.x = data->camera.x * cos(rot_speed) \
+		- data->camera.y * sin(rot_speed);
+	data->camera.y = old_cam * sin(rot_speed) \
+		+ data->camera.y * cos(rot_speed);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 12:10:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:56:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	key_release(int key, t_data *data)
 	else if (key == XK_d)
 		move(data, 1, 0);
 	else if (key == XK_Left)
-		rotate(data, -1);
+		rotate(data, 0);
 	else if (key == XK_Right)
 		rotate(data, 1);
 	// printf("AFTER MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);

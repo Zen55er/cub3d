@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 12:11:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:01:08 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@
 # define WINDOW_HEIGHT 450
 # define TEXTURE_W_H 64
 # define FOV_FACTOR 0.66
-# define P_SPEED 0.3
+# define P_SPEED 0.1
 # define BUBBLE 0.1
+# define ROTATION 0.04
 
 typedef struct s_coord
 {
