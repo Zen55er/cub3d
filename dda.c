@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 16:19:22 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/25 14:27:15 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	post_dda(t_data *data)
 		data->draw_start = 0;
 	data->draw_end = (WINDOW_HEIGHT + data->line_height) / 2;
 	if (data->draw_end >= WINDOW_HEIGHT)
-		data->draw_end = WINDOW_HEIGHT - 1;
+		data->draw_end = WINDOW_HEIGHT/*  - 1 */;
 }
 
 int	choose_texture(t_data *data)
@@ -218,12 +218,12 @@ void	buffer_to_image(t_data *data, int i, int j)
 {
 	if ((j > (WINDOW_HEIGHT - (data->map_y * 8)) && j < WINDOW_HEIGHT) && i > -1
 		&& (i < (data->map_x * 8)))
-		mini_map(data, i, j);
+		j = mini_map(data, i, j);
 	else if (data->buffer[j][i] > 0)
 		put_pixel(&data->image, i, j, data->buffer[j][i]);
 	else if (j < WINDOW_HEIGHT / 2)
 		put_pixel(&data->image, i, j, data->ceiling);
-	else if (j < WINDOW_HEIGHT - 1)
+	else if (j < WINDOW_HEIGHT/*  - 1 */)
 		put_pixel(&data->image, i, j, data->floor);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/22 14:56:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/25 14:34:27 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	rotate(t_data *data, int flag)
 	double	old_dir;
 	double	old_cam;
 	double	rot_speed;
-
+	
 	if (flag)
 		rot_speed = ROTATION;
 	else
