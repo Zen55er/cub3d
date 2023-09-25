@@ -164,6 +164,48 @@ int	choose_texture(t_data *data)
 	}
 }
 
+// void	calc_textures(t_data *data, int i)
+// {
+// 	int		j;
+// 	int		tex_num;
+// 	t_coord	tex;
+// 	double	wall_x;
+// 	double	step;
+// 	double	tex_pos;
+// 	int		colour;
+
+// 	tex_num = choose_texture(data);
+// 	if (!data->side)
+// 		wall_x = data->pos.y + data->perp_wall_dist * data->ray_dir.y;
+// 	else
+// 		wall_x = data->pos.x + data->perp_wall_dist * data->ray_dir.x;
+// 	wall_x -= floor(wall_x);
+// 	tex.x = (int)(wall_x * (double)TEXTURE_W_H);
+// 	if ((!data->side && data->ray_dir.x < 0)
+// 		|| (data->side && data->ray_dir.y > 0))
+// 		tex.x = TEXTURE_W_H - tex.x - 1;
+// 	step = 1.0 * TEXTURE_W_H / data->line_height;
+// 	tex_pos = (data->draw_start + (data->line_height - WINDOW_HEIGHT) / 2) * step;
+// 	j = data->draw_start;
+// 	while (j < data->draw_end)
+// 	{
+// 		if (tex_pos > (double)INT_MAX)
+// 			tex.y = INT_MAX;
+// 		else
+// 			tex.y = (int)tex_pos /* & (TEXTURE_W_H - 1) */;
+// 		tex_pos += step;
+// 		colour = data->nswe_images[tex_num].addr[TEXTURE_W_H * tex.y + tex.x];
+// 		/* Making colour darker. Decide if it stays;
+// 		if (data->side)
+// 			colour = (colour >> 1) & 8355711; */
+// 		if (colour > 0)
+// 			data->buffer[j][i] = colour;
+// 		else
+// 			data->buffer[j][i] = colour + 1;
+// 		j++;
+// 	}
+// }
+
 void	calc_textures(t_data *data, int i)
 {
 	int		j;
@@ -199,9 +241,7 @@ void	calc_textures(t_data *data, int i)
 		if (data->side)
 			colour = (colour >> 1) & 8355711; */
 		if (colour > 0)
-			data->buffer[j][i] = colour;
-		else
-			data->buffer[j][i] = colour + 1;
+			data->image[j * (data->image.line_len / 4) + i] = colour;
 		j++;
 	}
 }
