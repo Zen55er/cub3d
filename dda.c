@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 10:16:53 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:28:08 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,5 +234,8 @@ int	big_loop(t_data *data)
 		data->image.mlx_img, 0, 0);
 	data->m_pos.x = (int)data->pos.x;
 	data->m_pos.y = (int)data->pos.y;
+	mini_map(data);
+	mlx_put_image_to_window(data->init, data->window,
+		data->image.mlx_img, 0, 0);
 	return (0);
 }
