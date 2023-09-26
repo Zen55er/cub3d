@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:50:01 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/26 15:47:30 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:05:30 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	mini_map(t_data *data)
 {
 	t_coord	px;
+	t_coord	i;
 	int		size;
 	int		flag;
 	double	p;
@@ -30,6 +31,14 @@ int	mini_map(t_data *data)
 		while (++px.x < MM_SIZE)
 			draw_square(data, px.x * PPT, (WINDOW_HEIGHT - size) + (px.y * PPT), data->mini_map[px.y][px.x]);
 		flag++;
+	}
+	i.x = -1;
+	while (++i.x < MM_SIZE)
+	{
+		i.y = -1;
+		while (++i.y < MM_SIZE)
+			printf("%i", data->mini_map[i.x][i.y]);
+		printf("\n");
 	}
 	return (0);
 }
@@ -67,14 +76,16 @@ void	get_minimap(t_data *data, int size)
 	}
 	while (index.y < size && real_pos.y < data->map_y)
 	{
+		real_pos.x = 0;
+		index.x = 0;
 		while (index.x < size && real_pos.x < data->map_x)
 		{
 			if (index.x == size / 2 && index.y == size / 2)
 				data->mini_map[index.y][index.x] = 0x00FF00;
 			else if (data->map[real_pos.y][real_pos.x] == '1')
-				data->mini_map[index.y][index.y] = 0xFF0000;
+				data->mini_map[index.y][index.x] = 0xFF0000;
 			else if (data->map[real_pos.y][real_pos.x] == '0')
-				data->mini_map[index.y][index.y] = 0xFFFFFF;
+				data->mini_map[index.y][index.x] = 0xFFFFFF;
 			real_pos.x++;
 			index.x++;
 		}
