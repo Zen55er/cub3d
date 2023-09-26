@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 13:27:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 13:38:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,23 @@ int	key_release(int key, t_data *data)
 
 void	update_mouse_pos(int x, int y, t_data *data)
 {
-	if (x > WINDOW_WIDTH - MOUSE_LIM)
-		x = MOUSE_LIM;
-	else if (x < MOUSE_LIM)
-		x = WINDOW_WIDTH - MOUSE_LIM;
-	// x = WINDOW_WIDTH / 2;
+	x = WINDOW_WIDTH / 2;
 	mlx_mouse_move(data->init, data->window, x, y);
 }
 
 int	mouse_look(int x, int y, t_data *data)
 {
-	static int	old_pos = WINDOW_WIDTH / 2;
+	static int	old_pos;
 
+	old_pos = WINDOW_WIDTH / 2;
 	if (x == old_pos)
 		return (0);
 	if (x < old_pos)
 		rotate(data, 0, 1);
 	else if (x > old_pos)
 		rotate(data, 1, 1);
-	update_mouse_pos(x, y, data);
 	old_pos = x;
+	update_mouse_pos(x, y, data);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 13:24:01 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 13:37:27 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include "minilibx-linux/mlx_int.h"
 # include "minilibx-linux/mlx.h"
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 450
+# define WINDOW_WIDTH 1600
+# define WINDOW_HEIGHT 900
 # define TEXTURE_W_H 64
 # define FOV_FACTOR 0.66
 # define P_SPEED 0.1

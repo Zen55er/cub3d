@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/26 13:26:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 13:33:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	rotate(t_data *data, int flag, int mouse)
 	else
 		rot_speed = -ROTATION;
 	if (mouse)
-		rot_speed *= 0.25;
+		rot_speed *= 0.5;
 	old_dir = data->direction.x;
 	data->direction.x = data->direction.x * cos(rot_speed) \
 		- data->direction.y * sin(rot_speed);
