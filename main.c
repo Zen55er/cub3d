@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 15:48:14 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:17:15 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ int	init_data(t_data *data)
 	data->side = -1;
 	data->image.mlx_img = 0;
 	data->image.addr = 0;
-	data->buffer = (int **)ft_calloc(sizeof(int *), WINDOW_HEIGHT + 1);
-	for (int y = 0; y < WINDOW_HEIGHT; y++)
-		data->buffer[y] = (int *)ft_calloc(sizeof(int), WINDOW_WIDTH + 1);
 	return (0);
 }
 

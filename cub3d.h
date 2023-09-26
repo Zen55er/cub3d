@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 15:52:30 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:16:12 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_data
 	void		*init;
 	void		*window;
 	t_img2		image;
-	int			**buffer;
 	t_coord_d	direction;
 	t_coord_d	camera;
 	double		cam_x;
