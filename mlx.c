@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 10:45:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 13:27:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,31 @@ int	key_release(int key, t_data *data)
 	return (0);
 }
 
+void	update_mouse_pos(int x, int y, t_data *data)
+{
+	if (x > WINDOW_WIDTH - MOUSE_LIM)
+		x = MOUSE_LIM;
+	else if (x < MOUSE_LIM)
+		x = WINDOW_WIDTH - MOUSE_LIM;
+	// x = WINDOW_WIDTH / 2;
+	mlx_mouse_move(data->init, data->window, x, y);
+}
+
+int	mouse_look(int x, int y, t_data *data)
+{
+	static int	old_pos = WINDOW_WIDTH / 2;
+
+	if (x == old_pos)
+		return (0);
+	if (x < old_pos)
+		rotate(data, 0, 1);
+	else if (x > old_pos)
+		rotate(data, 1, 1);
+	update_mouse_pos(x, y, data);
+	old_pos = x;
+	return (0);
+}
+
 int	init_image(t_data *data)
 {
 	data->image.mlx_img = mlx_new_image(data->init,
@@ -113,8 +138,11 @@ int	mlx(t_data *data)
 	if (open_images(data))
 		return (1);
 	get_start_dir(data);
+	mlx_mouse_move(data->init, data->window, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	mlx_mouse_hide(data->init, data->window);
 	mlx_hook(data->window, KeyPress, KeyPressMask, key_press, data);
 	mlx_hook(data->window, KeyRelease, KeyReleaseMask, key_release, data);
+	mlx_hook(data->window, MotionNotify, PointerMotionMask, mouse_look, data);
 	mlx_hook(data->window, DestroyNotify, KeyPressMask, close_window, data);
 	mlx_loop_hook(data->init, big_loop, data);
 	mlx_loop(data->init);

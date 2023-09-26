@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 10:43:17 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 13:24:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define P_SPEED 0.1
 # define BUBBLE 0.1
 # define ROTATION 0.04
+# define MOUSE_LIM 25
 
 typedef struct s_coord
 {
@@ -149,7 +150,7 @@ int		big_loop(t_data *data);
 
 /* movements.c */
 int		move(t_data *data, int flag, int dir);
-int		rotate(t_data *data, int flag);
+int		rotate(t_data *data, int flag, int mouse);
 void	movement(t_data *data);
 
 /*clean.c*/

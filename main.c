@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 10:34:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 12:08:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ int	init_data(t_data *data)
 	data->key_states.d = 0;
 	data->key_states.l = 0;
 	data->key_states.r = 0;
+	data->nswe_images[0].mlx_img = 0;
+	data->nswe_images[1].mlx_img = 0;
+	data->nswe_images[2].mlx_img = 0;
+	data->nswe_images[3].mlx_img = 0;
 	data->init = 0;
 	data->window = 0;
 	data->side = -1;

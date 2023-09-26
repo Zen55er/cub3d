@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/26 10:48:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 13:26:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	move(t_data *data, int flag, int dir)
 	return (0);
 }
 
-int	rotate(t_data *data, int flag)
+int	rotate(t_data *data, int flag, int mouse)
 {
 	double	old_dir;
 	double	old_cam;
@@ -75,6 +75,8 @@ int	rotate(t_data *data, int flag)
 		rot_speed = ROTATION;
 	else
 		rot_speed = -ROTATION;
+	if (mouse)
+		rot_speed *= 0.25;
 	old_dir = data->direction.x;
 	data->direction.x = data->direction.x * cos(rot_speed) \
 		- data->direction.y * sin(rot_speed);
@@ -99,8 +101,8 @@ void	movement(t_data *data)
 	if (data->key_states.d)
 		move(data, 1, 0);
 	if (data->key_states.l)
-		rotate(data, 0);
+		rotate(data, 0, 0);
 	if (data->key_states.r)
-		rotate(data, 1);
+		rotate(data, 1, 0);
 	return ;
 }
