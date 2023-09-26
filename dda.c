@@ -6,11 +6,16 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 09:01:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 09:59:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	get_pixel(t_img2 img, int i, int j)
+{
+	return (j * (img.line_len / 4) + i);
+}
 
 void	set_coord(t_coord_d *coord, double x, double y)
 {
@@ -143,7 +148,7 @@ void	post_dda(t_data *data)
 		data->draw_start = 0;
 	data->draw_end = (WINDOW_HEIGHT + data->line_height) / 2;
 	if (data->draw_end >= WINDOW_HEIGHT)
-		data->draw_end = WINDOW_HEIGHT - 1;
+		data->draw_end = WINDOW_HEIGHT;
 }
 
 int	choose_texture(t_data *data)
@@ -163,48 +168,6 @@ int	choose_texture(t_data *data)
 			return (3);
 	}
 }
-
-// void	calc_textures(t_data *data, int i)
-// {
-// 	int		j;
-// 	int		tex_num;
-// 	t_coord	tex;
-// 	double	wall_x;
-// 	double	step;
-// 	double	tex_pos;
-// 	int		colour;
-
-// 	tex_num = choose_texture(data);
-// 	if (!data->side)
-// 		wall_x = data->pos.y + data->perp_wall_dist * data->ray_dir.y;
-// 	else
-// 		wall_x = data->pos.x + data->perp_wall_dist * data->ray_dir.x;
-// 	wall_x -= floor(wall_x);
-// 	tex.x = (int)(wall_x * (double)TEXTURE_W_H);
-// 	if ((!data->side && data->ray_dir.x < 0)
-// 		|| (data->side && data->ray_dir.y > 0))
-// 		tex.x = TEXTURE_W_H - tex.x - 1;
-// 	step = 1.0 * TEXTURE_W_H / data->line_height;
-// 	tex_pos = (data->draw_start + (data->line_height - WINDOW_HEIGHT) / 2) * step;
-// 	j = data->draw_start;
-// 	while (j < data->draw_end)
-// 	{
-// 		if (tex_pos > (double)INT_MAX)
-// 			tex.y = INT_MAX;
-// 		else
-// 			tex.y = (int)tex_pos /* & (TEXTURE_W_H - 1) */;
-// 		tex_pos += step;
-// 		colour = data->nswe_images[tex_num].addr[TEXTURE_W_H * tex.y + tex.x];
-// 		/* Making colour darker. Decide if it stays;
-// 		if (data->side)
-// 			colour = (colour >> 1) & 8355711; */
-// 		if (colour > 0)
-// 			data->buffer[j][i] = colour;
-// 		else
-// 			data->buffer[j][i] = colour + 1;
-// 		j++;
-// 	}
-// }
 
 void	calc_textures(t_data *data, int i)
 {
@@ -237,34 +200,14 @@ void	calc_textures(t_data *data, int i)
 			tex.y = (int)tex_pos /* & (TEXTURE_W_H - 1) */;
 		tex_pos += step;
 		colour = data->nswe_images[tex_num].addr[TEXTURE_W_H * tex.y + tex.x];
-		/* Making colour darker. Decide if it stays;
-		if (data->side)
-			colour = (colour >> 1) & 8355711; */
-		if (colour > 0)
-			data->image[j * (data->image.line_len / 4) + i] = colour;
+		if (!colour)
+			colour++;
+		data->image.addr[get_pixel(data->image, i, j)] = colour;
 		j++;
 	}
 }
 
-void	put_pixel(t_img2 *img, int i, int j, int colour)
-{
-	int	pixel;
-
-	pixel = j * (img->line_len / 4) + i;
-	img->addr[pixel] = colour;
-}
-
-void	buffer_to_image(t_data *data, int i, int j)
-{
-	if (data->buffer[j][i] > 0)
-		put_pixel(&data->image, i, j, data->buffer[j][i]);
-	else if (j < WINDOW_HEIGHT / 2)
-		put_pixel(&data->image, i, j, data->ceiling);
-	else if (j < WINDOW_HEIGHT - 1)
-		put_pixel(&data->image, i, j, data->floor);
-}
-
-void	draw_buffer(t_data *data)
+void	draw_ceiling_floor(t_data *data)
 {
 	int	i;
 	int	j;
@@ -274,31 +217,21 @@ void	draw_buffer(t_data *data)
 	{
 		i = -1;
 		while (++i < WINDOW_WIDTH)
-			buffer_to_image(data, i, j);
+		{
+			if (j < (WINDOW_HEIGHT / 2))
+				data->image.addr[get_pixel(data->image, i, j)] = data->ceiling;
+			else
+				data->image.addr[get_pixel(data->image, i, j)] = data->floor;
+		}
 	}
-	mlx_put_image_to_window(data->init, data->window, data->image.mlx_img, 0, 0);
-}
-
-void	clear_buffer(t_data *data)
-{
-	int	i;
-	int	j;
-
-	j = -1;
-	while (++j < WINDOW_HEIGHT)
-	{
-		i = -1;
-		while (++i < WINDOW_WIDTH)
-			data->buffer[j][i] = 0;
-	}
-	return ;
 }
 
 int	big_loop(t_data *data)
 {
+	draw_ceiling_floor(data);
 	pre_dda(data);
-	draw_buffer(data);
-	clear_buffer(data);
+	mlx_put_image_to_window(data->init, data->window,
+		data->image.mlx_img, 0, 0);
 	data->m_pos.x = (int)data->pos.x;
 	data->m_pos.y = (int)data->pos.y;
 	return (0);

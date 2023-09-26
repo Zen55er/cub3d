@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/22 15:01:08 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 09:56:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_data
 	void		*init;
 	void		*window;
 	t_img2		image;
-	int			**buffer;
 	t_coord_d	direction;
 	t_coord_d	camera;
 	double		cam_x;

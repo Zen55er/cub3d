@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/22 14:56:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:08:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ which messes up the dda calculations.
 int	personal_space(t_data *data, double new, double pos, int flag)
 {
 	if ((!flag
-		&& ((new > pos && data->map[data->m_pos.y][data->m_pos.x + 1] == '1'
-		&& (double)(data->m_pos.x + 1) - new < BUBBLE)
+			&& ((new > pos && data->map[data->m_pos.y][data->m_pos.x + 1] == '1'
+				&& (double)(data->m_pos.x + 1) - new < BUBBLE)
 		|| (new < pos && data->map[data->m_pos.y][data->m_pos.x - 1] == '1'
 		&& new - (double)(data->m_pos.x) < BUBBLE)))
 		|| (flag
@@ -48,7 +48,7 @@ int	move(t_data *data, int flag, int dir)
 	else
 	{
 		new.x = (data->pos.x + data->camera.x * P_SPEED * flag);
-		new.y = (data->pos.y + data->camera.y * P_SPEED * flag);		
+		new.y = (data->pos.y + data->camera.y * P_SPEED * flag);
 	}
 	if (data->map[(int)data->pos.y][(int)new.x] != '1'
 		&& !personal_space(data, new.x, data->pos.x, 0))
