@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 09:56:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:34:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ int	init_data(t_data *data)
 	data->count = 0;
 	data->map_start.x = 0;
 	data->map_start.y = 0;
+	data->key_states.w = 0;
+	data->key_states.a = 0;
+	data->key_states.s = 0;
+	data->key_states.d = 0;
+	data->key_states.l = 0;
+	data->key_states.r = 0;
 	data->init = 0;
 	data->window = 0;
 	data->side = -1;

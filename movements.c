@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/26 10:08:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:48:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,21 @@ int	rotate(t_data *data, int flag)
 	data->camera.y = old_cam * sin(rot_speed) \
 		+ data->camera.y * cos(rot_speed);
 	return (0);
+}
+
+void	movement(t_data *data)
+{
+	if (data->key_states.w)
+		move(data, 1, 1);
+	if (data->key_states.s)
+		move(data, -1, 1);
+	if (data->key_states.a)
+		move(data, -1, 0);
+	if (data->key_states.d)
+		move(data, 1, 0);
+	if (data->key_states.l)
+		rotate(data, 0);
+	if (data->key_states.r)
+		rotate(data, 1);
+	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 10:06:16 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:45:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,40 @@ int	close_window(t_data *data)
 }
 
 /*Begins movement and turning logic*/
-int	key_release(int key, t_data *data)
+int	key_press(int key, t_data *data)
 {
-	// printf("BEFORE MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
 	if (key == XK_Escape)
 		close_window(data);
-	else if (key == XK_w)
-		move(data, 1, 1);
-	else if (key == XK_s)
-		move(data, -1, 1);
-	else if (key == XK_a)
-		move(data, -1, 0);
-	else if (key == XK_d)
-		move(data, 1, 0);
-	else if (key == XK_Left)
-		rotate(data, 0);
-	else if (key == XK_Right)
-		rotate(data, 1);
-	// printf("AFTER MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
+	if (key == XK_w)
+		data->key_states.w = 1;
+	if (key == XK_s)
+		data->key_states.s = 1;
+	if (key == XK_a)
+		data->key_states.a = 1;
+	if (key == XK_d)
+		data->key_states.d = 1;
+	if (key == XK_Left)
+		data->key_states.l = 1;
+	if (key == XK_Right)
+		data->key_states.r = 1;
+	movement(data);
+	return (0);
+}
+
+int	key_release(int key, t_data *data)
+{
+	if (key == XK_w)
+		data->key_states.w = 0;
+	if (key == XK_s)
+		data->key_states.s = 0;
+	if (key == XK_a)
+		data->key_states.a = 0;
+	if (key == XK_d)
+		data->key_states.d = 0;
+	if (key == XK_Left)
+		data->key_states.l = 0;
+	if (key == XK_Right)
+		data->key_states.r = 0;
 	return (0);
 }
 
@@ -97,7 +113,8 @@ int	mlx(t_data *data)
 	if (open_images(data))
 		return (1);
 	get_start_dir(data);
-	mlx_hook(data->window, KeyPress, KeyPressMask, key_release, data);
+	mlx_hook(data->window, KeyPress, KeyPressMask, key_press, data);
+	mlx_hook(data->window, KeyRelease, KeyReleaseMask, key_release, data);
 	mlx_hook(data->window, DestroyNotify, KeyPressMask, close_window, data);
 	mlx_loop_hook(data->init, big_loop, data);
 	mlx_loop(data->init);

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 09:56:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:43:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ typedef struct s_img2
 	int		endian;
 }			t_img2;
 
+typedef struct s_keys
+{
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	l;
+	int	r;
+}	t_keys;
+
 /*For texture indexes: N = 0, S = 1, W = 2, E = 3*/
 typedef struct s_data
 {
@@ -63,6 +73,7 @@ typedef struct s_data
 	t_coord		map_start;
 	char		*nswe_paths[4];
 	t_img2		nswe_images[4];
+	t_keys		key_states;
 	int			floor;
 	int			ceiling;
 	int			count;
@@ -134,14 +145,12 @@ void	stepper(t_data *data, int flag);
 void	dda(t_data *data);
 void	post_dda(t_data *data);
 void	calc_textures(t_data *data, int i);
-void	put_pixel(t_img2 *img, int i, int j, int colour);
-void	buffer_to_image(t_data *data, int i, int j);
-void	draw_buffer(t_data *data);
 int		big_loop(t_data *data);
 
 /* movements.c */
 int		move(t_data *data, int flag, int dir);
 int		rotate(t_data *data, int flag);
+void	movement(t_data *data);
 
 /*clean.c*/
 int		ft_free(void *ptr);
