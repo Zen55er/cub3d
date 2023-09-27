@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/27 09:03:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:19:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 # include "minilibx-linux/mlx_int.h"
 # include "minilibx-linux/mlx.h"
 
-# define WINDOW_WIDTH 1600
-# define WINDOW_HEIGHT 900
+# define WINDOW_WIDTH 640
+# define WINDOW_HEIGHT 480
 # define TEXTURE_W_H 64
 # define FOV_FACTOR 0.66
 # define P_SPEED 0.1
 # define BUBBLE 0.1
-# define ROTATION 0.03
+# define ROTATION 0.05
 # define MOUSE_LIM 25
 
 typedef struct s_coord
