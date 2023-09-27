@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/27 14:29:46 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:52:06 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 # define BUBBLE 0.1
 # define ROTATION 0.05
 # define MOUSE_LIM 25
-# define PPT 12
 # define MM_SIZE 9
+# define PPT 30
 
 typedef struct s_coord
 {

@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 09:31:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/27 11:59:09 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:45:51 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,8 +230,6 @@ int	big_loop(t_data *data)
 {
 	draw_ceiling_floor(data);
 	pre_dda(data);
-	/* mlx_put_image_to_window(data->init, data->window,
-		data->image.mlx_img, 0, 0); */
 	data->m_pos.x = (int)data->pos.x;
 	data->m_pos.y = (int)data->pos.y;
 	render_minimap(data);

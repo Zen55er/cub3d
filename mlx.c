@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/27 14:30:39 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:52:51 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ int	mouse_look(int x, int y, t_data *data)
 	if (x == old_pos)
 		return (0);
 	if (x < old_pos)
-		rotate(data, -(ROTATION / 2.0));
+		rotate(data, -(ROTATION / 4.0));
 	else if (x > old_pos)
-		rotate(data, (ROTATION / 2.0));
+		rotate(data, (ROTATION / 4.0));
 	old_pos = x;
 	update_mouse_pos(x, y, data);
 	return (0);

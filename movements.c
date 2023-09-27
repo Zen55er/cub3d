@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/27 14:30:56 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:46:57 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	rotate(t_data *data, double rot_speed)
 
 void	movement(t_data *data)
 {
-	printf("BEFORE MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
 	if (data->key_states.w)
 		move(data, 1, data->direction);
 	if (data->key_states.s)
@@ -89,6 +88,5 @@ void	movement(t_data *data)
 		rotate(data, -ROTATION);
 	if (data->key_states.r)
 		rotate(data, ROTATION);
-	printf("AFTER MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
 	return ;
 }
