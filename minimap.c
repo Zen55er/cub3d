@@ -6,86 +6,79 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:50:01 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/26 16:05:30 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:48:03 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	mini_map(t_data *data)
+int	render_minimap(t_data *data)
 {
 	t_coord	px;
-	t_coord	i;
 	int		size;
-	int		flag;
 	double	p;
 
 	p = (double)(WINDOW_HEIGHT) / (double)(WINDOW_WIDTH);
 	size = (WINDOW_WIDTH / 4) * p;
-	get_minimap(data, 9);
+	reset_minimap(data);
+	get_minimap(data);
 	px.y = -1;
-	flag = 1;
 	while (++px.y < MM_SIZE)
 	{
 		px.x = -1;
 		while (++px.x < MM_SIZE)
-			draw_square(data, px.x * PPT, (WINDOW_HEIGHT - size) + (px.y * PPT), data->mini_map[px.y][px.x]);
-		flag++;
-	}
-	i.x = -1;
-	while (++i.x < MM_SIZE)
-	{
-		i.y = -1;
-		while (++i.y < MM_SIZE)
-			printf("%i", data->mini_map[i.x][i.y]);
-		printf("\n");
+			draw_square(data, px.x * PPT,
+				((WINDOW_HEIGHT - size) + (px.y * PPT)),
+				data->mini_map[px.y][px.x]);
 	}
 	return (0);
 }
 
-int	draw_square(t_data *data, int i, int j, int flag)
+int	draw_square(t_data *data, int i, int j, int c)
 {
 	int	k;
 	int	l;
 
 	l = -1;
-	(void)flag;
 	while (++l < PPT)
 	{
 		k = -1;
 		while (++k < PPT)
-			data->image.addr[get_pixel(data->image, (i + k), (j + l))] = flag;
+			data->image.addr[get_pixel(data->image, (i + k), (j + l))] = c;
 	}
 	return (0);
 }
 
 /* 2 = player | 1 = wall | 3 = floor | O = out of bounds */
-void	get_minimap(t_data *data, int size)
+void	get_minimap(t_data *data)
 {
 	t_coord	index;
 	t_coord	real_pos;
+	t_coord	temp;
 
 	real_pos.x = data->m_pos.x;
 	real_pos.y = data->m_pos.y;
-	index.y = size / 2;
-	while (--index.y && --real_pos.y)
+	index.y = (MM_SIZE / 2);
+	while (index.y && real_pos.y)
 	{
-		index.x = size / 2;
-		while (--index.x && --real_pos.x)
-			continue ;
+		index.y--;
+		real_pos.y--;
 	}
-	while (index.y < size && real_pos.y < data->map_y)
+	index.x = (MM_SIZE / 2);
+	while (index.x && real_pos.x)
 	{
-		real_pos.x = 0;
-		index.x = 0;
-		while (index.x < size && real_pos.x < data->map_x)
+		index.x--;
+		real_pos.x--;
+	}
+	temp.x = index.x;
+	temp.y = real_pos.x;
+	while (index.y < MM_SIZE)
+	{
+		real_pos.x = temp.y;
+		index.x = temp.x;
+		while (index.x < MM_SIZE)
 		{
-			if (index.x == size / 2 && index.y == size / 2)
-				data->mini_map[index.y][index.x] = 0x00FF00;
-			else if (data->map[real_pos.y][real_pos.x] == '1')
-				data->mini_map[index.y][index.x] = 0xFF0000;
-			else if (data->map[real_pos.y][real_pos.x] == '0')
-				data->mini_map[index.y][index.x] = 0xFFFFFF;
+			put_color(data, index, real_pos);
 			real_pos.x++;
 			index.x++;
 		}
@@ -93,17 +86,32 @@ void	get_minimap(t_data *data, int size)
 		real_pos.y++;
 	}
 }
-/* t_coord	get_offset(t_data *data, int size, t_coord index)
-{
-	t_coord	pos;
 
-	if (index.x < size / 2)
-		pos.x = data->m_pos.x - (size / 2);
-	else if (index.x > size / 2)
-		pos.x = data->m_pos.x + (size / 2);
-	if (index.y < size / 2)
-		pos.y = data->m_pos.y - (size / 2);
-	else if (index.y > size / 2)
-		pos.y = data->m_pos.y + (size / 2);
-	return (pos);
-} */
+void	put_color(t_data *data, t_coord spot, t_coord pos)
+{
+	if (pos.y < data->map_y && pos.x < data->map_x)
+	{
+		if (spot.x == (MM_SIZE / 2) && spot.y == (MM_SIZE / 2))
+			data->mini_map[spot.y][spot.x] = 0x00FF00;
+		else if (data->map[pos.y][pos.x] == '1')
+			data->mini_map[spot.y][spot.x] = 0xFF0000;
+		else if (data->map[pos.y][pos.x] == '0'
+			|| data->map[pos.y][pos.x] == 'N' || data->map[pos.y][pos.x] == 'S'
+			|| data->map[pos.y][pos.x] == 'W' || data->map[pos.y][pos.x] == 'E')
+			data->mini_map[spot.y][spot.x] = 0xDDDDDD;
+	}
+	return ;
+}
+
+void	reset_minimap(t_data *data)
+{
+	t_coord	spot;
+
+	spot.y = -1;
+	while (++spot.y < MM_SIZE)
+	{
+		spot.x = -1;
+		while (++spot.x < MM_SIZE)
+			data->mini_map[spot.y][spot.x] = 0x000000;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 14:37:59 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:52:16 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 # include "minilibx-linux/mlx_int.h"
 # include "minilibx-linux/mlx.h"
 
-# define WINDOW_WIDTH 1080
-# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 # define TEXTURE_W_H 64
 # define FOV_FACTOR 0.66
 # define P_SPEED 0.1
 # define BUBBLE 0.1
 # define ROTATION 0.04
-# define PPT 8
+# define PPT 12
 # define MM_SIZE 9
 
 typedef struct s_coord
@@ -144,9 +144,11 @@ int		big_loop(t_data *data);
 int		get_pixel(t_img2 img, int i, int j);
 
 /* mini_map.c */
-int		mini_map(t_data *data);
-int		draw_square(t_data *data, int i, int j, int flag);
-void	get_minimap(t_data *data, int size);
+int		render_minimap(t_data *data);
+int		draw_square(t_data *data, int i, int j, int c);
+void	get_minimap(t_data *data);
+void	put_color(t_data *data, t_coord spot, t_coord pos);
+void	reset_minimap(t_data *data);
 
 /* movements.c */
 int		move(t_data *data, int flag, int dir);

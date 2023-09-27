@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/26 10:17:24 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:09:25 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	rotate(t_data *data, int flag)
 	double	old_dir;
 	double	old_cam;
 	double	rot_speed;
-	
+
 	if (flag)
 		rot_speed = ROTATION;
 	else
