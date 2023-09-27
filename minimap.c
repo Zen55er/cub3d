@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:50:01 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/27 14:57:53 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:19:44 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,46 +59,42 @@ void	get_minimap(t_data *data)
 	real_pos.x = data->m_pos.x;
 	real_pos.y = data->m_pos.y;
 	index.y = (MM_SIZE / 2);
-	while (index.y && real_pos.y)
-	{
-		index.y--;
+	while (index.y && real_pos.y && index.y--)
 		real_pos.y--;
-	}
 	index.x = (MM_SIZE / 2);
-	while (index.x && real_pos.x)
-	{
-		index.x--;
+	while (index.x && real_pos.x && index.x--)
 		real_pos.x--;
-	}
 	temp.x = index.x;
 	temp.y = real_pos.x;
 	while (index.y < MM_SIZE)
 	{
-		real_pos.x = temp.y;
-		index.x = temp.x;
-		while (index.x < MM_SIZE)
-		{
-			put_color(data, index, real_pos);
-			real_pos.x++;
-			index.x++;
-		}
+		put_color(data, index, real_pos, temp);
 		index.y++;
 		real_pos.y++;
 	}
 }
 
-void	put_color(t_data *data, t_coord spot, t_coord pos)
+void	put_color(t_data *data, t_coord spot, t_coord pos, t_coord temp)
 {
-	if (pos.y < data->map_y && pos.x < data->map_x)
+	pos.x = temp.y;
+	spot.x = temp.x;
+	while (spot.x < MM_SIZE)
 	{
-		if (spot.x == (MM_SIZE / 2) && spot.y == (MM_SIZE / 2))
-			data->mini_map[spot.y][spot.x] = 0x95C623;
-		else if (data->map[pos.y][pos.x] == '1')
-			data->mini_map[spot.y][spot.x] = 0x5E5E5E;
-		else if (data->map[pos.y][pos.x] == '0'
-			|| data->map[pos.y][pos.x] == 'N' || data->map[pos.y][pos.x] == 'S'
-			|| data->map[pos.y][pos.x] == 'W' || data->map[pos.y][pos.x] == 'E')
-			data->mini_map[spot.y][spot.x] = 0xDEDEDE;
+		if (pos.y < data->map_y && pos.x < data->map_x)
+		{
+			if (spot.x == (MM_SIZE / 2) && spot.y == (MM_SIZE / 2))
+				data->mini_map[spot.y][spot.x] = 0x95C623;
+			else if (data->map[pos.y][pos.x] == '1')
+				data->mini_map[spot.y][spot.x] = 0x5E5E5E;
+			else if (data->map[pos.y][pos.x] == '0'
+				|| data->map[pos.y][pos.x] == 'N'
+				|| data->map[pos.y][pos.x] == 'S'
+				|| data->map[pos.y][pos.x] == 'W'
+				|| data->map[pos.y][pos.x] == 'E')
+				data->mini_map[spot.y][spot.x] = 0xDEDEDE;
+		}
+		pos.x++;
+		spot.x++;
 	}
 	return ;
 }

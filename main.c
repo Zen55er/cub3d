@@ -6,23 +6,11 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:15:36 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/27 14:30:09 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:21:09 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	print_map(char **map)
-{
-	int	i;
-
-	/*FOR DEBUGGING ONLY, DELETE AT THE END*/
-	i = -1;
-	while (map[++i])
-		printf(":%s:\n", map[i]);
-	printf("\n");
-	return ;
-}
 
 /*Prints error messages according to subject*/
 int	print_error(char *message)
@@ -52,6 +40,12 @@ int	init_data(t_data *data)
 	data->key_states.d = 0;
 	data->key_states.l = 0;
 	data->key_states.r = 0;
+	init_data_2(data);
+	return (0);
+}
+
+void	init_data_2(t_data *data)
+{
 	data->nswe_images[0].mlx_img = 0;
 	data->nswe_images[1].mlx_img = 0;
 	data->nswe_images[2].mlx_img = 0;
@@ -61,7 +55,6 @@ int	init_data(t_data *data)
 	data->side = -1;
 	data->image.mlx_img = 0;
 	data->image.addr = 0;
-	return (0);
 }
 
 int	main(int ac, char **av)
@@ -78,7 +71,6 @@ int	main(int ac, char **av)
 	data.pos.y = (double)data.map_start.y + 0.5;
 	data.m_pos.x = data.map_start.x;
 	data.m_pos.y = data.map_start.y;
-	print_map(data.map);
 	mlx(&data);
 	mlx_destroy_image(data.init, data.image.mlx_img);
 	mlx_destroy_window(data.init, data.window);

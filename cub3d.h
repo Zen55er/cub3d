@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/27 14:52:06 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:30:42 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_data
 /*main.c*/
 int		print_error(char *message);
 int		init_data(t_data *data);
+void	init_data_2(t_data *data);
 
 /*map.c*/
 int		check_forbidden(char *temp);
@@ -134,29 +135,41 @@ int		holes(t_data *data, int i, int j);
 int		edge_check(t_data *data);
 
 /*mlx.c*/
-int		no_event(t_data *data);
+int		key_press(int key, t_data *data);
 int		key_release(int key, t_data *data);
 int		close_window(t_data *data);
 int		open_images(t_data *data);
 int		mlx(t_data *data);
 
+/* mlx_utils.c */
+int		init_image(t_data *data);
+void	update_mouse_pos(int x, int y, t_data *data);
+int		mouse_look(int x, int y, t_data *data);
+
 /*dda.c*/
+int		get_pixel(t_img2 img, int i, int j);
 void	set_coord(t_coord_d *coord, double x, double y);
 void	get_start_dir(t_data *data);
 void	step_dist(t_data *data);
 void	pre_dda(t_data *data);
+
+/* dda_utils_1.c */
 void	stepper(t_data *data, int flag);
 void	dda(t_data *data);
 void	post_dda(t_data *data);
+int		choose_texture(t_data *data);
 void	calc_textures(t_data *data, int i);
+
+/* dda_utils_2.c */
+void	set_colour(t_data *data, t_coord tex, t_coord_d pos_step, int i);
+void	draw_ceiling_floor(t_data *data);
 int		big_loop(t_data *data);
-int		get_pixel(t_img2 img, int i, int j);
 
 /* mini_map.c */
 int		render_minimap(t_data *data);
 int		draw_square(t_data *data, int i, int j, int c);
 void	get_minimap(t_data *data);
-void	put_color(t_data *data, t_coord spot, t_coord pos);
+void	put_color(t_data *data, t_coord spot, t_coord pos, t_coord temp);
 void	reset_minimap(t_data *data);
 
 /* movements.c */
