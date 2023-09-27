@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:35:34 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/26 13:33:17 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/27 11:24:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ If the new position's x/y coordinate is in a square adjacent to a wall,
 check if the distance from the new position is not lower than BUBBLE
 (the minimum allowed distance the player can be to a wall).
 This avoids cases where the move makes the player land at the edge of a wall,
-which messes up the dda calculations.
-*/
+which messes up the dda calculations.*/
 int	personal_space(t_data *data, double new, double pos, int flag)
 {
 	if ((!flag
@@ -36,20 +35,12 @@ int	personal_space(t_data *data, double new, double pos, int flag)
 	return (0);
 }
 
-int	move(t_data *data, int flag, int dir)
+int	move(t_data *data, int flag, t_coord_d dir_cam)
 {
 	t_coord_d	new;
 
-	if (dir)
-	{
-		new.x = (data->pos.x + data->direction.x * P_SPEED * flag);
-		new.y = (data->pos.y + data->direction.y * P_SPEED * flag);
-	}
-	else
-	{
-		new.x = (data->pos.x + data->camera.x * P_SPEED * flag);
-		new.y = (data->pos.y + data->camera.y * P_SPEED * flag);
-	}
+	new.x = (data->pos.x + dir_cam.x * P_SPEED * flag);
+	new.y = (data->pos.y + dir_cam.y * P_SPEED * flag);
 	if (data->map[(int)data->pos.y][(int)new.x] != '1'
 		&& !personal_space(data, new.x, data->pos.x, 0))
 	{
@@ -65,18 +56,11 @@ int	move(t_data *data, int flag, int dir)
 	return (0);
 }
 
-int	rotate(t_data *data, int flag, int mouse)
+int	rotate(t_data *data, double rot_speed)
 {
 	double	old_dir;
 	double	old_cam;
-	double	rot_speed;
 
-	if (flag)
-		rot_speed = ROTATION;
-	else
-		rot_speed = -ROTATION;
-	if (mouse)
-		rot_speed *= 0.5;
 	old_dir = data->direction.x;
 	data->direction.x = data->direction.x * cos(rot_speed) \
 		- data->direction.y * sin(rot_speed);
@@ -92,17 +76,19 @@ int	rotate(t_data *data, int flag, int mouse)
 
 void	movement(t_data *data)
 {
+	printf("BEFORE MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
 	if (data->key_states.w)
-		move(data, 1, 1);
+		move(data, 1, data->direction);
 	if (data->key_states.s)
-		move(data, -1, 1);
+		move(data, -1, data->direction);
 	if (data->key_states.a)
-		move(data, -1, 0);
+		move(data, -1, data->camera);
 	if (data->key_states.d)
-		move(data, 1, 0);
+		move(data, 1, data->camera);
 	if (data->key_states.l)
-		rotate(data, 0, 0);
+		rotate(data, -ROTATION);
 	if (data->key_states.r)
-		rotate(data, 1, 0);
+		rotate(data, ROTATION);
+	printf("AFTER MOVE: pos_x: %lf, pos_y: %lf\nmap_pos_x: %i, map_pos_y: %i\n", data->pos.x, data->pos.y, data->m_pos.x, data->m_pos.y);
 	return ;
 }

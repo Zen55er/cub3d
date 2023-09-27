@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 13:37:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/27 09:03:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define FOV_FACTOR 0.66
 # define P_SPEED 0.1
 # define BUBBLE 0.1
-# define ROTATION 0.04
+# define ROTATION 0.03
 # define MOUSE_LIM 25
 
 typedef struct s_coord
@@ -149,8 +149,8 @@ void	calc_textures(t_data *data, int i);
 int		big_loop(t_data *data);
 
 /* movements.c */
-int		move(t_data *data, int flag, int dir);
-int		rotate(t_data *data, int flag, int mouse);
+int		move(t_data *data, int flag, t_coord_d dir_cam);
+int		rotate(t_data *data, double rot_speed);
 void	movement(t_data *data);
 
 /*clean.c*/

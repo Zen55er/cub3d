@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/26 13:38:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:46:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	key_release(int key, t_data *data)
 		data->key_states.l = 0;
 	if (key == XK_Right)
 		data->key_states.r = 0;
+	movement(data);
 	return (0);
 }
 
@@ -78,9 +79,9 @@ int	mouse_look(int x, int y, t_data *data)
 	if (x == old_pos)
 		return (0);
 	if (x < old_pos)
-		rotate(data, 0, 1);
+		rotate(data, -(ROTATION / 2.0));
 	else if (x > old_pos)
-		rotate(data, 1, 1);
+		rotate(data, (ROTATION / 2.0));
 	old_pos = x;
 	update_mouse_pos(x, y, data);
 	return (0);
@@ -139,7 +140,7 @@ int	mlx(t_data *data)
 	mlx_mouse_hide(data->init, data->window);
 	mlx_hook(data->window, KeyPress, KeyPressMask, key_press, data);
 	mlx_hook(data->window, KeyRelease, KeyReleaseMask, key_release, data);
-	mlx_hook(data->window, MotionNotify, PointerMotionMask, mouse_look, data);
+	// mlx_hook(data->window, MotionNotify, PointerMotionMask, mouse_look, data);
 	mlx_hook(data->window, DestroyNotify, KeyPressMask, close_window, data);
 	mlx_loop_hook(data->init, big_loop, data);
 	mlx_loop(data->init);
