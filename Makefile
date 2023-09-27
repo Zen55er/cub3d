@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 10:10:00 by gacorrei          #+#    #+#              #
-#    Updated: 2023/09/27 10:44:27 by gacorrei         ###   ########.fr        #
+#    Updated: 2023/09/27 14:30:20 by tlemos-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cub3D
 SRC			= main.c map.c validate_elements.c texture_validation.c \
 			validate_map.c validate_map_edge.c mlx.c clean.c dda.c \
-			movements.c
+			movements.c minimap.c
 LIBFT_DIR	= libft
 LIBFT		= libft/libft.a
 MLX_DIR		= minilibx-linux

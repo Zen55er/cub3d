@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/27 12:19:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:29:46 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@
 # include "minilibx-linux/mlx_int.h"
 # include "minilibx-linux/mlx.h"
 
-# define WINDOW_WIDTH 640
-# define WINDOW_HEIGHT 480
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 # define TEXTURE_W_H 64
 # define FOV_FACTOR 0.66
 # define P_SPEED 0.1
 # define BUBBLE 0.1
 # define ROTATION 0.05
 # define MOUSE_LIM 25
+# define PPT 12
+# define MM_SIZE 9
 
 typedef struct s_coord
 {
@@ -95,6 +97,7 @@ typedef struct s_data
 	int			line_height;
 	int			draw_start;
 	int			draw_end;
+	int			mini_map[MM_SIZE][MM_SIZE];
 }				t_data;
 
 /*main.c*/
@@ -147,6 +150,14 @@ void	dda(t_data *data);
 void	post_dda(t_data *data);
 void	calc_textures(t_data *data, int i);
 int		big_loop(t_data *data);
+int		get_pixel(t_img2 img, int i, int j);
+
+/* mini_map.c */
+int		render_minimap(t_data *data);
+int		draw_square(t_data *data, int i, int j, int c);
+void	get_minimap(t_data *data);
+void	put_color(t_data *data, t_coord spot, t_coord pos);
+void	reset_minimap(t_data *data);
 
 /* movements.c */
 int		move(t_data *data, int flag, t_coord_d dir_cam);
