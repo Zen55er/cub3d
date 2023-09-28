@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:50:01 by tlemos-m          #+#    #+#             */
-/*   Updated: 2023/09/27 15:19:44 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/28 09:57:27 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,15 @@ void	put_color(t_data *data, t_coord spot, t_coord pos, t_coord temp)
 		if (pos.y < data->map_y && pos.x < data->map_x)
 		{
 			if (spot.x == (MM_SIZE / 2) && spot.y == (MM_SIZE / 2))
-				data->mini_map[spot.y][spot.x] = 0x95C623;
+				data->mini_map[spot.y][spot.x] = M_MAP_P;
 			else if (data->map[pos.y][pos.x] == '1')
-				data->mini_map[spot.y][spot.x] = 0x5E5E5E;
+				data->mini_map[spot.y][spot.x] = M_MAP_W;
 			else if (data->map[pos.y][pos.x] == '0'
 				|| data->map[pos.y][pos.x] == 'N'
 				|| data->map[pos.y][pos.x] == 'S'
 				|| data->map[pos.y][pos.x] == 'W'
 				|| data->map[pos.y][pos.x] == 'E')
-				data->mini_map[spot.y][spot.x] = 0xDEDEDE;
+				data->mini_map[spot.y][spot.x] = M_MAP_F;
 		}
 		pos.x++;
 		spot.x++;
@@ -108,6 +108,6 @@ void	reset_minimap(t_data *data)
 	{
 		spot.x = -1;
 		while (++spot.x < MM_SIZE)
-			data->mini_map[spot.y][spot.x] = 0xC4C4C4;
+			data->mini_map[spot.y][spot.x] = M_MAP_V;
 	}
 }

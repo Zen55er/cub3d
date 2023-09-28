@@ -1,9 +1,9 @@
 F 0,255,0
-NO ./textures/Final/north.xpm
+NO ./textures/Final/monty_python/north.xpm
 C 0,0,255
-SO ./textures/Final/south.xpm
-WE ./textures/Final/west.xpm
-EA ./textures/Final/east.xpm
+SO ./textures/Final/monty_python/south.xpm
+WE ./textures/Final/monty_python/west.xpm
+EA ./textures/Final/monty_python/east.xpm
 
 
         1111111111111111111111111

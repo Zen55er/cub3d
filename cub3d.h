@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacorrei <gacorrei@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:10:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/28 09:18:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2023/09/28 09:58:19 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@
 # define MOUSE_LIM 25
 # define MM_SIZE 9
 # define PPT 30
+# define M_MAP_P 0x17F9FF
+# define M_MAP_W 0x005BC5
+# define M_MAP_F 0x001449
+# define M_MAP_V 0x012677
 
 typedef struct s_coord
 {
