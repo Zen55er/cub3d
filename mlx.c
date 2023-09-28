@@ -6,7 +6,7 @@
 /*   By: tlemos-m <tlemos-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 09:57:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2023/09/27 15:25:03 by tlemos-m         ###   ########.fr       */
+/*   Updated: 2023/09/28 10:21:31 by tlemos-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ int	mlx(t_data *data)
 	data->window = mlx_new_window(data->init, WINDOW_WIDTH, WINDOW_HEIGHT,
 			"cub3D");
 	if (!data->window)
+	{
+		free(data->init);
 		return (print_error("mlx window failed"));
+	}
 	if (open_images(data))
 		return (1);
 	get_start_dir(data);
